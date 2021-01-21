@@ -15,41 +15,76 @@ class DayInfoLesson extends StatelessWidget {
     return Container(
         child: Expanded(
       child: ListView.builder(
+        padding: EdgeInsets.all(20),
         itemCount: _sheduleList.length,
         itemBuilder: (context, index) {
           return Card(
+              elevation: 30,
+              //shadowColor: Colors.redAccent,
+              margin: EdgeInsets.symmetric(vertical: 7),
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10)),
               child: Container(
-            decoration: BoxDecoration(
-              borderRadius: BorderRadiusDirectional.circular(12),
-              gradient: LinearGradient(
-                  colors: [Colors.grey[800], Colors.grey[850]],
-                  begin: Alignment(1.0, 0.0),
-                  end: Alignment(1.0, 1.0)),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black,
-                  blurRadius: 12,
-                  offset: Offset(0, 6),
-                ),
-              ],
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Text(
-                  _sheduleList[index].name,
-                  textAlign: TextAlign.start,
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25),
-                ),
-                Text(_sheduleList[index].type, textAlign: TextAlign.start),
-                Text(_sheduleList[index].auditorium,
-                    textAlign: TextAlign.start),
-                Text(_sheduleList[index].group, textAlign: TextAlign.start),
-                Text(_sheduleList[index].lecturer, textAlign: TextAlign.start),
-                Text(_sheduleList[index].time, textAlign: TextAlign.end),
-              ],
-            ),
-          ));
+                  padding: EdgeInsets.all(10),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadiusDirectional.circular(10),
+                    gradient: LinearGradient(
+                        colors: [Colors.grey[800], Colors.grey[850]],
+                        begin: Alignment(1.0, 0.0),
+                        end: Alignment(1.0, 1.0)),
+                  ),
+                  child: Row(
+                    //mainAxisAlignment: MainAxisAlignment.end,
+                    //verticalDirection: VerticalDirection.up,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Expanded(
+                          child: Column(
+                        // mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Text(
+                            _sheduleList[index].name,
+                            textAlign: TextAlign.start,
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold, fontSize: 15),
+                          ),
+                          Row(
+                            children: <Widget>[
+                              Icon(Icons.school),
+                              Text(' ' + _sheduleList[index].type,
+                                  textAlign: TextAlign.start),
+                            ],
+                          ),
+                          Row(
+                            children: <Widget>[
+                              Icon(Icons.location_on),
+                              Text(_sheduleList[index].auditorium,
+                                  textAlign: TextAlign.start)
+                            ],
+                          ),
+                          Row(
+                            children: <Widget>[
+                              Icon(Icons.directions_walk),
+                              Text(_sheduleList[index].group,
+                                  textAlign: TextAlign.start),
+                            ],
+                          ),
+                          Row(
+                            children: <Widget>[
+                              Icon(Icons.person),
+                              Text(_sheduleList[index].lecturer,
+                                  textAlign: TextAlign.start),
+                            ],
+                          )
+                        ],
+                      )),
+                      // Expanded(
+                      //     child:
+                      Text(_sheduleList[index].time, textAlign: TextAlign.end)
+                      //)
+                    ],
+                  )));
         },
       ),
     ));
@@ -73,7 +108,19 @@ class DayInfoLesson extends StatelessWidget {
               itemCount: listDay.length,
               itemBuilder: (context, index) {
                 if (listDay[index] == null) {
-                  return (Text('День самостоятельных занятий'));
+                  return Center(
+                      child: ListTile(
+                    title: Image.asset(
+                      'assets/image/rem.jpg',
+                      scale: 1,
+                    ),
+                    subtitle: Text(
+                      'ДEНЬ САМОСТОЯТЕЛЬНЫХ ЗАНЯТИЙ ',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                          color: Colors.black, fontWeight: FontWeight.bold),
+                    ),
+                  ));
                 } else
                   return Container(
                       alignment: Alignment.center,

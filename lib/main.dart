@@ -16,12 +16,3 @@ void main() async {
   }
   runApp(HomePage(state));
 }
-
-// class MyApp extends StatelessWidget {
-//   @override
-//   Widget build(BuildContext context) {
-//     print('Start shedule');
-//   testhttpparse();
-//     return HomePage();
-//   }
-// }
