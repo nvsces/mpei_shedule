@@ -5,6 +5,7 @@ import 'package:mpeischedule/bloc/controller_event.dart';
 import 'package:mpeischedule/bloc/controller_state.dart';
 import 'package:mpeischedule/bloc/shedule_bloc.dart';
 import 'package:mpeischedule/bloc/shedule_event.dart';
+import 'package:mpeischedule/bloc/shedule_state.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 
 class ScrollDay extends StatelessWidget {
@@ -15,8 +16,8 @@ class ScrollDay extends StatelessWidget {
 
   ScrollDay(this.listTime);
 
-  Widget buildDayItem(BuildContext context, int index, ControllerState state) {
-    final ControllerBloc ctrlbloc = BlocProvider.of(context);
+  Widget buildDayItem(BuildContext context, int index, ControllerState state,
+      ControllerBloc ctrlbloc) {
     return GestureDetector(
       onTap: () {
         ctrlbloc.add(CtrlCurrentEvent(index));
@@ -53,12 +54,13 @@ class ScrollDay extends StatelessWidget {
                 duration: Duration(milliseconds: 300));
           }
         }, builder: (context, state) {
+          final ControllerBloc ctrlbloc = BlocProvider.of(context);
           return ScrollablePositionedList.builder(
             scrollDirection: Axis.horizontal,
             itemScrollController: _scrollController,
             itemCount: day.length,
             itemBuilder: (context, index) =>
-                buildDayItem(context, index, state),
+                buildDayItem(context, index, state, ctrlbloc),
           );
         }));
   }
