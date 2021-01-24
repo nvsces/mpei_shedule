@@ -4,6 +4,7 @@ import 'package:http/http.dart' as http;
 import 'package:http/http.dart';
 import 'package:mpeischedule/models/day_lesson.dart';
 import 'package:mpeischedule/models/lesson.dart';
+import 'package:requests/requests.dart' as req;
 
 fetchHttpShedule(String url) {
   //ar client = http.Client();
@@ -52,14 +53,39 @@ List<DayLesson> initPage(List<DayLesson> dayList) {
 void testWeb() async {
   //'https://mpei.ru/Education/timetable/Pages/default.aspx?group=ЭР-14-17'
   print('responce');
-  Response response = await fetchHttpShedule(
-      'https://mpei.ru/Education/timetable/Pages/table.aspx?groupoid=9494&start=2020.12.28');
-  print(response);
-  if (response.statusCode == 200) {
-    print(response.body);
-  } else {
-    print('error');
-  }
+  Map<String, String> body = {'UserName': 'ShanyginDS', 'Password': 'mit463u'};
+  var r = await req.Requests.post('https://bars.mpei.ru/bars_web/', body: body);
+  //get('https://google.com');
+  r.raiseForStatus();
+  var d = await req.Requests.get('https://bars.mpei.ru/bars_web/');
+  String dbody = d.content();
+  String bodyr = r.content();
+  print(bodyr);
+
+  var document = parse(dbody);
+  var tableWeek = document.getElementsByClassName('font-weight-bold')[0].text;
+
+  var lesson = document.getElementsByClassName('my-2');
+  lesson.forEach((element) {
+    print(element.text);
+  });
+
+  print(lesson);
+  //var name = tableWeek.getElementsByTagName('span')[0].text;
+  print(tableWeek);
+  // Response response =
+  //     await http.post(Uri.parse('https://bars.mpei.ru/bars_web/'), body: body);
+
+  // print(response);
+  // if (response.statusCode == 302) {
+  //   Response getResponse = await http.get(Uri.parse(
+  //       'https://bars.mpei.ru/bars_web/UserName=ShanyginDS&Password=mit463u'));
+
+  //   print(getResponse.body);
+
+  //   print(response.body);
+  // } else {
+  //   print('error');
 }
 
 Future<List<DayLesson>> testhttpparse() async {

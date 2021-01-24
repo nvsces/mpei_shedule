@@ -37,6 +37,8 @@ dependencies:
   intl: ^0.16.1
   html: ^0.14.0+4
   scrollable_positioned_list: ^0.1.9
+  requests: ^3.3.0
+  adaptive_theme: ^1.1.0
 
 dev_dependencies:
   flutter_test:

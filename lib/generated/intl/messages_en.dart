@@ -21,6 +21,11 @@ class MessageLookup extends MessageLookupByLibrary {
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static _notInlinedMessages(_) => <String, Function> {
+    "choose_group_label" : MessageLookupByLibrary.simpleMessage("Выбрать группу"),
+    "error_shedule" : MessageLookupByLibrary.simpleMessage("Расписание группы не найдено"),
+    "free_day_title" : MessageLookupByLibrary.simpleMessage("ДEНЬ САМОСТОЯТЕЛЬНЫХ ЗАНЯТИЙ"),
+    "input_name_group_label" : MessageLookupByLibrary.simpleMessage("Номер группы"),
+    "landing_btn_label" : MessageLookupByLibrary.simpleMessage("Продолжить"),
     "mail_title_app" : MessageLookupByLibrary.simpleMessage("Моё приложение"),
     "shedule" : MessageLookupByLibrary.simpleMessage("Расписание")
   };

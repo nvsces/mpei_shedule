@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:mpeischedule/bloc/controller_bloc.dart';
-import 'package:mpeischedule/bloc/controller_event.dart';
-import 'package:mpeischedule/bloc/controller_state.dart';
+import 'package:mpeischedule/bloc/controller/controller_bloc.dart';
+import 'package:mpeischedule/bloc/controller/controller_event.dart';
+import 'package:mpeischedule/bloc/controller/controller_state.dart';
+import 'package:mpeischedule/generated/l10n.dart';
 import 'package:mpeischedule/models/day_lesson.dart';
 import 'package:mpeischedule/models/lesson.dart';
 
@@ -49,13 +50,13 @@ class DayInfoLesson extends StatelessWidget {
                             style: TextStyle(
                                 fontWeight: FontWeight.bold, fontSize: 15),
                           ),
-                          Row(
-                            children: <Widget>[
-                              Icon(Icons.school),
-                              Text(' ' + _sheduleList[index].type,
-                                  textAlign: TextAlign.start),
-                            ],
-                          ),
+                          //Row(
+                          // children: <Widget>[
+                          //  Icon(Icons.school),
+                          Text(_sheduleList[index].type,
+                              textAlign: TextAlign.start),
+                          //  ],
+                          // ),
                           Row(
                             children: <Widget>[
                               Icon(Icons.location_on),
@@ -70,13 +71,15 @@ class DayInfoLesson extends StatelessWidget {
                                   textAlign: TextAlign.start),
                             ],
                           ),
-                          Row(
-                            children: <Widget>[
-                              Icon(Icons.person),
-                              Text(_sheduleList[index].lecturer,
-                                  textAlign: TextAlign.start),
-                            ],
-                          )
+                          _sheduleList[index].lecturer.isEmpty
+                              ? Text('')
+                              : Row(
+                                  children: <Widget>[
+                                    Icon(Icons.person),
+                                    Text(_sheduleList[index].lecturer,
+                                        textAlign: TextAlign.start),
+                                  ],
+                                )
                         ],
                       )),
                       // Expanded(
@@ -115,7 +118,7 @@ class DayInfoLesson extends StatelessWidget {
                       scale: 1,
                     ),
                     subtitle: Text(
-                      'ДEНЬ САМОСТОЯТЕЛЬНЫХ ЗАНЯТИЙ ',
+                      S.of(context).free_day_title,
                       textAlign: TextAlign.center,
                       style: TextStyle(
                           color: Colors.black, fontWeight: FontWeight.bold),

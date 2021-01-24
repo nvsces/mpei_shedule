@@ -1,6 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:mpeischedule/bloc/shedule_event.dart';
-import 'package:mpeischedule/bloc/shedule_state.dart';
+import 'package:mpeischedule/bloc/shedule/shedule_event.dart';
+import 'package:mpeischedule/bloc/shedule/shedule_state.dart';
 import 'package:mpeischedule/models/day_lesson.dart';
 import 'package:mpeischedule/sevices/shedule_api_provider.dart';
 import 'package:mpeischedule/sevices/shedule_repository.dart';

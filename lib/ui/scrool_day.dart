@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:mpeischedule/bloc/controller_bloc.dart';
-import 'package:mpeischedule/bloc/controller_event.dart';
-import 'package:mpeischedule/bloc/controller_state.dart';
-import 'package:mpeischedule/bloc/shedule_bloc.dart';
-import 'package:mpeischedule/bloc/shedule_event.dart';
-import 'package:mpeischedule/bloc/shedule_state.dart';
+import 'package:mpeischedule/bloc/controller/controller_bloc.dart';
+import 'package:mpeischedule/bloc/controller/controller_event.dart';
+import 'package:mpeischedule/bloc/controller/controller_state.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 
 class ScrollDay extends StatelessWidget {

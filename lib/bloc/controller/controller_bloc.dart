@@ -1,6 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:mpeischedule/bloc/controller_event.dart';
-import 'package:mpeischedule/bloc/controller_state.dart';
+import 'package:mpeischedule/bloc/controller/controller_event.dart';
+import 'package:mpeischedule/bloc/controller/controller_state.dart';
 
 class ControllerBloc extends Bloc<ControllerEvent, ControllerState> {
   ControllerBloc() : super(CtrlIndexState(sectionIndex: 0));

@@ -54,6 +54,56 @@ class S {
       args: [],
     );
   }
+
+  /// `ДEНЬ САМОСТОЯТЕЛЬНЫХ ЗАНЯТИЙ`
+  String get free_day_title {
+    return Intl.message(
+      'ДEНЬ САМОСТОЯТЕЛЬНЫХ ЗАНЯТИЙ',
+      name: 'free_day_title',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Номер группы`
+  String get input_name_group_label {
+    return Intl.message(
+      'Номер группы',
+      name: 'input_name_group_label',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Продолжить`
+  String get landing_btn_label {
+    return Intl.message(
+      'Продолжить',
+      name: 'landing_btn_label',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Расписание группы не найдено`
+  String get error_shedule {
+    return Intl.message(
+      'Расписание группы не найдено',
+      name: 'error_shedule',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Выбрать группу`
+  String get choose_group_label {
+    return Intl.message(
+      'Выбрать группу',
+      name: 'choose_group_label',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

@@ -1,4 +1,9 @@
 {
     "mail_title_app":"Моё приложение",
-    "shedule":"Расписание"
+    "shedule":"Расписание",
+    "free_day_title":"ДEНЬ САМОСТОЯТЕЛЬНЫХ ЗАНЯТИЙ",
+    "input_name_group_label":"Номер группы",
+    "landing_btn_label":"Продолжить",
+    "error_shedule":"Расписание группы не найдено",
+    "choose_group_label":"Выбрать группу"
 }
