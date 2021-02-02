@@ -10,8 +10,12 @@ import 'package:mpeischedule/bloc/theme/theme_bloc.dart';
 import 'package:mpeischedule/bloc/theme/theme_evemt.dart';
 import 'package:mpeischedule/bloc/theme/theme_state.dart';
 import 'package:mpeischedule/generated/l10n.dart';
+import 'package:mpeischedule/sevices/mail_parser.dart';
 import 'package:mpeischedule/theme.dart';
-import 'package:mpeischedule/ui/landing.dart';
+import 'package:mpeischedule/ui/bars/auth_mpei.dart';
+import 'package:mpeischedule/ui/bars/bars_page.dart';
+import 'package:mpeischedule/ui/shedule/landing.dart';
+import 'package:mpeischedule/ui/mail/mail_page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class HomePage extends StatefulWidget {
@@ -25,6 +29,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
+    MailParser.getListHeader();
     return BlocProvider<AuthBloc>(
         create: (context) => AuthBloc(widget.authState),
         child: BlocBuilder<AuthBloc, AuthState>(builder: (context, state) {
@@ -47,8 +52,17 @@ class _HomePageState extends State<HomePage> {
   }
 }
 
-class HomeScaffold extends StatelessWidget {
+class HomeScaffold extends StatefulWidget {
   const HomeScaffold({Key key}) : super(key: key);
+
+  @override
+  _HomeScaffoldState createState() => _HomeScaffoldState();
+}
+
+class _HomeScaffoldState extends State<HomeScaffold> {
+  int _currentPage = 0;
+
+  final pages = <Widget>[LandingPage(), MailPage(), AuthMpei()];
 
   Widget iconExit(BuildContext context) {
     AuthBloc authBlocC = BlocProvider.of(context);
@@ -95,7 +109,35 @@ class HomeScaffold extends StatelessWidget {
                 )
               ],
             ),
-            body: LandingPage(),
+            body: IndexedStack(
+              children: pages,
+              index: _currentPage,
+            ),
+            bottomNavigationBar: BottomNavigationBar(
+              currentIndex: _currentPage,
+              onTap: (int index) {
+                setState(() {
+                  _currentPage = index;
+                });
+              },
+              backgroundColor: Theme.of(context).backgroundColor,
+              selectedItemColor:
+                  Theme.of(context).accentTextTheme.bodyText1.color,
+              items: [
+                BottomNavigationBarItem(
+                  icon: Icon(Icons.home),
+                  title: Text("Расписание"),
+                ),
+                BottomNavigationBarItem(
+                  icon: Icon(Icons.mail),
+                  title: Text("Почта"),
+                ),
+                BottomNavigationBarItem(
+                  icon: Icon(Icons.circle),
+                  title: Text("Барс"),
+                ),
+              ],
+            ),
           );
         }));
   }

@@ -57,8 +57,7 @@ class SheduleProvider {
 
   Future<String> getCurrentDateTime() async {}
 
-  Future<List<String>> getGroupId(
-      {String groupName, ActionEvent action}) async {
+  Future<List<String>> getGroupId({String groupName}) async {
     Response commonResponse = await fetchHttpShedule(
         'https://mpei.ru/Education/timetable/Pages/default.aspx?group=' +
             groupName);

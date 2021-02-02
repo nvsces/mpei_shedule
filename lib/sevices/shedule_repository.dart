@@ -10,9 +10,8 @@ class SheduleRepository {
   // Future<List<DayLesson>> getAllDayLesson(name) =>
   //     _sheduleProvider.testhttpparse(name);
 
-  Future<List<String>> getGroupId(
-      {String name, ActionEvent actionEvent = ActionEvent.now}) {
-    return _sheduleProvider.getGroupId(groupName: name, action: actionEvent);
+  Future<List<String>> getGroupId({String name}) {
+    return _sheduleProvider.getGroupId(groupName: name);
   }
 
   Future<List<DayLesson>> getDay(

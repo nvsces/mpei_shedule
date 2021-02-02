@@ -10,8 +10,8 @@ import 'package:mpeischedule/bloc/shedule/shedule_event.dart';
 import 'package:mpeischedule/bloc/shedule/shedule_state.dart';
 import 'package:mpeischedule/generated/l10n.dart';
 import 'package:mpeischedule/sevices/shedule_repository.dart';
-import 'package:mpeischedule/ui/day_Info.dart';
-import 'package:mpeischedule/ui/scrool_day.dart';
+import 'package:mpeischedule/ui/shedule/day_Info.dart';
+import 'package:mpeischedule/ui/shedule/scrool_day.dart';
 
 class BodyBloc extends StatelessWidget {
   String nameGroup;

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mpeischedule/bloc/auth/auth_state.dart';
-import 'package:mpeischedule/common/fetch_http.dart';
+import 'package:mpeischedule/sevices/mail_parser.dart';
 import 'package:mpeischedule/ui/home_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -9,7 +9,8 @@ void main() async {
   SharedPreferences preferences = await SharedPreferences.getInstance();
   var nameGroup = preferences.getString('group') ?? "";
   AuthState state;
-  testWeb();
+  //MailParser.init();
+  //testMail();
   if (nameGroup.isEmpty) {
     state = NotLogginState();
   } else {

@@ -1,9 +1,14 @@
+import 'dart:convert' show utf8;
+import 'package:ffi/ffi.dart';
 import 'package:html/dom.dart';
+import 'dart:collection';
 import 'package:html/parser.dart';
 import 'package:http/http.dart' as http;
 import 'package:http/http.dart';
 import 'package:mpeischedule/models/day_lesson.dart';
 import 'package:mpeischedule/models/lesson.dart';
+import 'package:mpeischedule/models/mail_header.dart';
+import 'package:mpeischedule/models/mail_message.dart';
 import 'package:requests/requests.dart' as req;
 
 fetchHttpShedule(String url) {
@@ -48,6 +53,109 @@ List<DayLesson> initPage(List<DayLesson> dayList) {
   }
 
   return pageList;
+}
+
+void onClkRdMsg(oLnk, sT, iI, fC) {
+  // stFrm();
+  // var msgId = 0;
+  // if (g_oFrm.chkmsg) {
+  //   if (isNaN(g_oFrm.chkmsg.length))
+  //     msgId = g_oFrm.chkmsg.value;
+  //   else
+  //     msgId = g_oFrm.chkmsg[iI].value;
+  //   msgId = urlEnc(msgId);
+  //   if ((msgId != 0) && (sT != "")) {
+  //     var sHref = "";
+  //     if (a_fIsJnkFld)
+  //       sHref = "?ae=Item&id=" + msgId;
+  //     else if (sT.indexOf("IPM.Appointment") == 0)
+  //       sHref = "?ae=PreFormAction&a=Open&t=" + sT + "&id=" + msgId;
+  //     else if (fC == 1)
+  //       sHref = "?ae=Item&t=" + sT + "&a=Open&s=Draft&id=" + msgId;
+  //     else
+  //       sHref = "?ae=Item&t=" + sT + "&id=" + msgId;
+  //     if (a_fWP) oLnk.target = "_blank";
+  //     oLnk.href = sHref;
+  //   }
+  // }
+}
+
+// String urlEnc(String s) {
+//   var out = Utf8.fromUtf8(s);
+//   return out;
+// }
+
+void testMail() async {
+  //'https://mail.mpei.ru/owa/?ae=Item&t=IPM.Note&id=RgAAAAAPjy5SY9aEQLCLwP8phAgIBwDObzvhn0pHQY6zDpXkxVixAGfZDOaVAADObzvhn0pHQY6zDpXkxVixAIsxrn2qAAAJ'
+  //'https://mail.mpei.ru/owa/?ae=Item&t=IPM.Note&id=RgAAAAAPjy5SY9aEQLCLwP8phAgIBwDObzvhn0pHQY6zDpXkxVixAGfZDOaVAADObzvhn0pHQY6zDpXkxVixAIsxrn2pAAAJ'
+
+  List<Map> mapList = [];
+  List<String> listRef = [];
+  String baseMsg =
+      'RgAAAAAPjy5SY9aEQLCLwP8phAgIBwDObzvhn0pHQY6zDpXkxVixAGfZDOaVAADObzvhn0pHQY6zDpXkxVixAIsxrn2oAAAJ';
+
+  Map<String, String> body = {
+    'curl': 'Z2FowaZ2F',
+    'forcedownlevel': '0',
+    'formdir': '2',
+    'username': 'ShanyginDS',
+    'password': 'mit463u',
+    'isUtf8': '1',
+    'trusted': '4'
+  };
+  var r = await req.Requests.post('https://mail.mpei.ru/CookieAuth.dll?Logon',
+      body: body);
+  String bodyr = r.content();
+  print(bodyr);
+  r.raiseForStatus();
+  var d = await req.Requests.get('https://mail.mpei.ru/owa/');
+  String dbody = d.content();
+
+  var document = parse(dbody);
+  var table = document.getElementsByClassName('lvw')[0];
+  var t2 = table.getElementsByTagName('tbody')[0];
+  var lessonStroka = t2.getElementsByTagName('tr');
+  lessonStroka.removeAt(0);
+  lessonStroka.removeAt(0);
+  lessonStroka.removeAt(0);
+
+  List<MailHeader> mailHeader = [];
+  int k = 3;
+  for (int i = 0; i < lessonStroka.length; i++) {
+    if (i != 0) k = 2;
+    var lesson = lessonStroka[i].getElementsByTagName('td');
+    List<String> listHeader = [];
+    for (int j = 0; j < lesson.length; j++) {
+      if (lesson[j].attributes.length < k) listHeader.add(lesson[j].text);
+    }
+    MailHeader header = MailHeader(
+        title: listHeader[0], author: listHeader[1], dateTime: listHeader[2]);
+    mailHeader.add(header);
+  }
+
+  print('финиш');
+
+  var chckMsg = document.getElementsByTagName('input');
+  chckMsg.forEach((element) {
+    if (element.attributes['type'] == 'checkbox' &&
+        element.attributes['name'] == 'chkmsg') {
+      listRef.add(element.attributes['value']);
+    }
+  });
+  //print(lesson.toString());
+  String msgUrl = 'https://mail.mpei.ru/owa/?ae=Item&t=IPM.Note&id=';
+  var msgResponse = await req.Requests.get(msgUrl + listRef[0]);
+  var documentMsg = parse(msgResponse.content());
+  var textMsg = documentMsg.getElementsByClassName('PlainText')[0];
+  var el = textMsg.text;
+  ////////////////////////////////////////////////
+  // el.forEach((element) {
+  //   print(element.text);
+  // });
+  // print(el);
+  // mapList.forEach((element) {});
+  // print(atr);
+  print('finish');
 }
 
 void testWeb() async {

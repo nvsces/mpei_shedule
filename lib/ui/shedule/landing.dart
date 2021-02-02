@@ -4,7 +4,7 @@ import 'package:mpeischedule/bloc/auth/auth_bloc.dart';
 import 'package:mpeischedule/bloc/auth/auth_event.dart';
 import 'package:mpeischedule/bloc/auth/auth_state.dart';
 import 'package:mpeischedule/generated/l10n.dart';
-import 'package:mpeischedule/ui/home_body_bloc.dart';
+import 'package:mpeischedule/ui/shedule/home_body_bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class LandingPage extends StatefulWidget {
