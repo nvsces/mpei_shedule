@@ -25,7 +25,7 @@ class MailParser {
     if (d.statusCode == 200)
       return true;
     else
-      false;
+      return false;
   }
 
   static Future<List<MailHeader>> getListHeader() async {
@@ -43,14 +43,25 @@ class MailParser {
     List<MailHeader> mailHeader = [];
     int k = 3;
     for (int i = 0; i < lessonStroka.length; i++) {
-      if (i != 0) k = 2;
+      // if (i != 0) k = 2;
+      // var lesson = lessonStroka[i].getElementsByTagName('td');
+      // List<String> listHeader = [];
+      // for (int j = 0; j < lesson.length; j++) {
+      //   if (lesson[j].attributes.length < k) listHeader.add(lesson[j].text);
+      // }
+      // MailHeader header = MailHeader(
+      //     title: listHeader[0], author: listHeader[1], dateTime: listHeader[2]);
+      // mailHeader.add(header);
+      //------------
       var lesson = lessonStroka[i].getElementsByTagName('td');
-      List<String> listHeader = [];
-      for (int j = 0; j < lesson.length; j++) {
-        if (lesson[j].attributes.length < k) listHeader.add(lesson[j].text);
-      }
+      var messageIm = lesson[1].getElementsByClassName('sI')[0];
+      var image = messageIm.attributes;
+      var status = image['alt'];
       MailHeader header = MailHeader(
-          title: listHeader[0], author: listHeader[1], dateTime: listHeader[2]);
+          title: lesson[4].text,
+          author: lesson[5].text,
+          dateTime: lesson[6].text,
+          status: status);
       mailHeader.add(header);
     }
 

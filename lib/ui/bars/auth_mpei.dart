@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:mpeischedule/bloc/auth_mpei_services/auth_services_bloc.dart';
+import 'package:mpeischedule/bloc/auth_mpei_services/auth_services_event.dart';
 import 'package:mpeischedule/sevices/bars_parser.dart';
-import 'package:mpeischedule/sevices/mail_parser.dart';
-import 'package:mpeischedule/ui/bars/bars_page.dart';
+
 import 'package:mpeischedule/ui/bars/bars_scaffold.dart';
 
 class AuthMpei extends StatelessWidget {
@@ -10,6 +12,7 @@ class AuthMpei extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final MpeiAuthBloc mpeiAuthBloc = BlocProvider.of(context);
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
@@ -42,13 +45,9 @@ class AuthMpei extends StatelessWidget {
         Padding(
           padding: EdgeInsets.all(30),
           child: RaisedButton(
-              onPressed: () async {
-                bool succes = await BarsParser.init(
-                    _loginController.text, _passwirdController.text);
-                if (succes) {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (ctx) => BarsScaffold()));
-                }
+              onPressed: () {
+                mpeiAuthBloc.add(MpeiLoginEvent(
+                    _loginController.text, _passwirdController.text));
               },
               textColor: Colors.white,
               child: Text('Войти')),

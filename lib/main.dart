@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:mpeischedule/bloc/auth/auth_state.dart';
-import 'package:mpeischedule/sevices/mail_parser.dart';
 import 'package:mpeischedule/ui/home_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+import 'bloc/authShedule/auth_state.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

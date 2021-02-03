@@ -1,6 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:mpeischedule/bloc/auth/auth_event.dart';
-import 'package:mpeischedule/bloc/auth/auth_state.dart';
+import 'package:mpeischedule/bloc/authShedule/auth_event.dart';
+import 'package:mpeischedule/bloc/authShedule/auth_state.dart';
 
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
   AuthBloc(AuthState initialState) : super(initialState);

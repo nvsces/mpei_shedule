@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:mpeischedule/bloc/auth/auth_bloc.dart';
-import 'package:mpeischedule/bloc/auth/auth_event.dart';
+import 'package:mpeischedule/bloc/authShedule/auth_bloc.dart';
+import 'package:mpeischedule/bloc/authShedule/auth_event.dart';
 import 'package:mpeischedule/bloc/controller/controller_bloc.dart';
 import 'package:mpeischedule/bloc/controller/controller_event.dart';
 import 'package:mpeischedule/bloc/shedule/shedule_bloc.dart';

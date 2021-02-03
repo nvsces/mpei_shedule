@@ -129,7 +129,10 @@ void testMail() async {
       if (lesson[j].attributes.length < k) listHeader.add(lesson[j].text);
     }
     MailHeader header = MailHeader(
-        title: listHeader[0], author: listHeader[1], dateTime: listHeader[2]);
+        title: listHeader[0],
+        author: listHeader[1],
+        dateTime: listHeader[2],
+        status: "");
     mailHeader.add(header);
   }
 

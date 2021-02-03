@@ -1,6 +1,8 @@
 import 'package:html/parser.dart';
 import 'package:requests/requests.dart' as req;
 
+const String bars_base_url = 'https://bars.mpei.ru/bars_web/';
+
 class BarsParser {
   //очистить куки .clearStoredCookies(hostname)
 
@@ -8,11 +10,10 @@ class BarsParser {
     //'ShanyginDS'
     //'mit463u'
     Map<String, String> body = {'UserName': login, 'Password': password};
-    var r =
-        await req.Requests.post('https://bars.mpei.ru/bars_web/', body: body);
+    var r = await req.Requests.post(bars_base_url, body: body);
     //get('https://google.com');
     r.raiseForStatus();
-    var d = await req.Requests.get('https://bars.mpei.ru/bars_web/');
+    var d = await req.Requests.get(bars_base_url);
     String dbody = d.content();
 
     var document = parse(dbody);

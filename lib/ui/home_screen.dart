@@ -3,9 +3,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:mpeischedule/bloc/auth/auth_bloc.dart';
-import 'package:mpeischedule/bloc/auth/auth_event.dart';
-import 'package:mpeischedule/bloc/auth/auth_state.dart';
+import 'package:mpeischedule/bloc/authShedule/auth_bloc.dart';
+import 'package:mpeischedule/bloc/authShedule/auth_event.dart';
+import 'package:mpeischedule/bloc/authShedule/auth_state.dart';
+import 'package:mpeischedule/bloc/auth_mpei_services/auth_services_bloc.dart';
+import 'package:mpeischedule/bloc/auth_mpei_services/auth_services_event.dart';
+import 'package:mpeischedule/bloc/auth_mpei_services/auth_services_state.dart';
 import 'package:mpeischedule/bloc/theme/theme_bloc.dart';
 import 'package:mpeischedule/bloc/theme/theme_evemt.dart';
 import 'package:mpeischedule/bloc/theme/theme_state.dart';
@@ -13,7 +16,8 @@ import 'package:mpeischedule/generated/l10n.dart';
 import 'package:mpeischedule/sevices/mail_parser.dart';
 import 'package:mpeischedule/theme.dart';
 import 'package:mpeischedule/ui/bars/auth_mpei.dart';
-import 'package:mpeischedule/ui/bars/bars_page.dart';
+import 'package:mpeischedule/ui/bars/mpei_landing_bars.dart';
+import 'package:mpeischedule/ui/mail/mpei_landing_mail.dart';
 import 'package:mpeischedule/ui/shedule/landing.dart';
 import 'package:mpeischedule/ui/mail/mail_page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -29,26 +33,31 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
-    MailParser.getListHeader();
-    return BlocProvider<AuthBloc>(
-        create: (context) => AuthBloc(widget.authState),
-        child: BlocBuilder<AuthBloc, AuthState>(builder: (context, state) {
-          return AdaptiveTheme(
-              light: kLightTheme,
-              dark: kDarkTheme,
-              initial: AdaptiveThemeMode.dark,
-              builder: (light, dark) => MaterialApp(
-                      localizationsDelegates: [
-                        S.delegate,
-                        GlobalMaterialLocalizations.delegate,
-                        GlobalWidgetsLocalizations.delegate,
-                        GlobalCupertinoLocalizations.delegate,
-                      ],
-                      supportedLocales: S.delegate.supportedLocales,
-                      darkTheme: dark,
-                      theme: light,
-                      home: HomeScaffold()));
-        }));
+    //MailParser.getListHeader();
+    return MultiBlocProvider(
+        providers: [
+          BlocProvider<AuthBloc>(
+            create: (BuildContext context) => AuthBloc(widget.authState),
+          ),
+          BlocProvider<MpeiAuthBloc>(
+            create: (BuildContext context) => MpeiAuthBloc(MpeiFirstState()),
+          ),
+        ],
+        child: AdaptiveTheme(
+            light: kLightTheme,
+            dark: kDarkTheme,
+            initial: AdaptiveThemeMode.dark,
+            builder: (light, dark) => MaterialApp(
+                    localizationsDelegates: [
+                      S.delegate,
+                      GlobalMaterialLocalizations.delegate,
+                      GlobalWidgetsLocalizations.delegate,
+                      GlobalCupertinoLocalizations.delegate,
+                    ],
+                    supportedLocales: S.delegate.supportedLocales,
+                    darkTheme: dark,
+                    theme: light,
+                    home: HomeScaffold())));
   }
 }
 
@@ -62,14 +71,22 @@ class HomeScaffold extends StatefulWidget {
 class _HomeScaffoldState extends State<HomeScaffold> {
   int _currentPage = 0;
 
-  final pages = <Widget>[LandingPage(), MailPage(), AuthMpei()];
+  final pages = <Widget>[
+    LandingPage(),
+    // MailPage(),
+    MpeiLandingPageMail(),
+    MpeiLandingPageBars(),
+  ];
+  //  AuthMpei()];
 
   Widget iconExit(BuildContext context) {
     AuthBloc authBlocC = BlocProvider.of(context);
+    MpeiAuthBloc mpeiAuthBlocC = BlocProvider.of(context);
     return IconButton(
         icon: Icon(Icons.exit_to_app),
         onPressed: () async {
           authBlocC.add(ExitEvent());
+          mpeiAuthBlocC.add(MpeiExitEvent());
           SharedPreferences pref = await SharedPreferences.getInstance();
           pref.remove('group');
         });

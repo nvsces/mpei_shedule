@@ -15,8 +15,9 @@ class MailBloc extends Bloc<MailEvent, MailState> {
       yield MailLoadingState();
       try {
         final List<MailHeader> mail = await mailRepository.getListHeader();
-        final List<String> ref = await mailRepository.getListRef();
-        final List<String> text = await mailRepository.getListText(ref);
+        //final List<String> ref = await mailRepository.getListRef();
+        //final List<String> text = await mailRepository.getListText(ref);
+        List<String> text = List(20);
         yield MailLoadedState(listHeader: mail, text: text);
       } catch (_) {
         yield MailEmptyState();

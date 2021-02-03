@@ -9,6 +9,14 @@ import 'package:mpeischedule/ui/mail/message_detail.dart';
 class MailPage extends StatelessWidget {
   final MailRepository mailRepository = MailRepository();
 
+  Icon getIcon(String status) {
+    if (status != "Сообщение: не прочитано") {
+      return Icon(Icons.drafts);
+    } else {
+      return Icon(Icons.email);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return BlocProvider<MailBloc>(
@@ -39,6 +47,7 @@ class MailPage extends StatelessWidget {
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(10)),
                       child: ListTile(
+                          leading: getIcon(state.listHeader[index].status),
                           title: Text(state.listHeader[index].title),
                           subtitle: Text(state.listHeader[index].author),
                           trailing: Text(state.listHeader[index].dateTime),
