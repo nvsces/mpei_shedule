@@ -4,10 +4,10 @@ import 'package:mpeischedule/bloc/auth_mpei_services/auth_services_bloc.dart';
 import 'package:mpeischedule/bloc/auth_mpei_services/auth_services_event.dart';
 import 'package:mpeischedule/bloc/auth_mpei_services/auth_services_state.dart';
 import 'package:mpeischedule/ui/bars/auth_mpei.dart';
-import 'package:mpeischedule/ui/bars/bars_page.dart';
 
-class MpeiLandingPageBars extends StatelessWidget {
-  const MpeiLandingPageBars({Key key}) : super(key: key);
+class MpeiLandingPage extends StatelessWidget {
+  Widget child;
+  MpeiLandingPage(this.child, {Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +18,7 @@ class MpeiLandingPageBars extends StatelessWidget {
         return Center(child: CircularProgressIndicator());
       }
       if (state is MpeiLoginState) {
-        return BarsPage();
+        return child;
       }
       if (state is MpeiNotLogginState) {
         return AuthMpei();

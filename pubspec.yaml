@@ -39,6 +39,8 @@ dependencies:
   scrollable_positioned_list: ^0.1.9
   requests: ^3.3.0
   adaptive_theme: ^1.1.0
+  webview_flutter: ^1.0.7
+  webview_cookie_manager: ^1.0.7
 
 dev_dependencies:
   flutter_test:

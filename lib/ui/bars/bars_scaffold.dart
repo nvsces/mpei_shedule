@@ -10,9 +10,6 @@ class BarsScaffold extends StatelessWidget {
       appBar: AppBar(
         title: Text('Барс МЭИ'),
       ),
-      //     body: Center(
-      //   child: Text('Проверка'),
-      // )
       body: BarsPage(),
     );
   }

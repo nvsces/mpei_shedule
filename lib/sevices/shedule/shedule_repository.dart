@@ -1,14 +1,9 @@
 import 'package:flutter/foundation.dart';
 import 'package:mpeischedule/models/day_lesson.dart';
-import 'package:mpeischedule/models/lesson.dart';
-import 'package:mpeischedule/sevices/shedule_api_provider.dart';
+import 'package:mpeischedule/sevices/shedule/shedule_api_provider.dart';
 
 class SheduleRepository {
   SheduleProvider _sheduleProvider = SheduleProvider();
-  //Future<List<Lesson>> getAllShedule() => _sheduleProvider.getLesson_dep();
-
-  // Future<List<DayLesson>> getAllDayLesson(name) =>
-  //     _sheduleProvider.testhttpparse(name);
 
   Future<List<String>> getGroupId({String name}) {
     return _sheduleProvider.getGroupId(groupName: name);

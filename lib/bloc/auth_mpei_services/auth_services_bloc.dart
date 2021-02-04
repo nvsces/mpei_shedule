@@ -1,8 +1,8 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mpeischedule/bloc/auth_mpei_services/auth_services_event.dart';
 import 'package:mpeischedule/bloc/auth_mpei_services/auth_services_state.dart';
-import 'package:mpeischedule/sevices/bars_parser.dart';
-import 'package:mpeischedule/sevices/mail_parser.dart';
+import 'package:mpeischedule/sevices/bars/bars_parser.dart';
+import 'package:mpeischedule/sevices/mail/mail_parser.dart';
 import 'package:requests/requests.dart' as req;
 import 'package:shared_preferences/shared_preferences.dart';
 

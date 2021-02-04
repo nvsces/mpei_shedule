@@ -9,8 +9,6 @@ void main() async {
   SharedPreferences preferences = await SharedPreferences.getInstance();
   var nameGroup = preferences.getString('group') ?? "";
   AuthState state;
-  //MailParser.init();
-  //testMail();
   if (nameGroup.isEmpty) {
     state = NotLogginState();
   } else {

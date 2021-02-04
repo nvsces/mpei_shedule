@@ -2,9 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mpeischedule/bloc/auth_mpei_services/auth_services_bloc.dart';
 import 'package:mpeischedule/bloc/auth_mpei_services/auth_services_event.dart';
-import 'package:mpeischedule/sevices/bars_parser.dart';
-
-import 'package:mpeischedule/ui/bars/bars_scaffold.dart';
 
 class AuthMpei extends StatelessWidget {
   TextEditingController _loginController = TextEditingController();

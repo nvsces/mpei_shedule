@@ -4,9 +4,6 @@ import 'package:requests/requests.dart' as req;
 
 class MailParser {
   static Future<bool> init(String login, String password) async {
-    //'ShanyginDS'
-    //'mit463u'
-
     Map<String, String> body = {
       'curl': 'Z2FowaZ2F',
       'forcedownlevel': '0',
@@ -41,18 +38,7 @@ class MailParser {
     lessonStroka.removeAt(0);
 
     List<MailHeader> mailHeader = [];
-    int k = 3;
     for (int i = 0; i < lessonStroka.length; i++) {
-      // if (i != 0) k = 2;
-      // var lesson = lessonStroka[i].getElementsByTagName('td');
-      // List<String> listHeader = [];
-      // for (int j = 0; j < lesson.length; j++) {
-      //   if (lesson[j].attributes.length < k) listHeader.add(lesson[j].text);
-      // }
-      // MailHeader header = MailHeader(
-      //     title: listHeader[0], author: listHeader[1], dateTime: listHeader[2]);
-      // mailHeader.add(header);
-      //------------
       var lesson = lessonStroka[i].getElementsByTagName('td');
       var messageIm = lesson[1].getElementsByClassName('sI')[0];
       var image = messageIm.attributes;
@@ -93,7 +79,6 @@ class MailParser {
     var textMsg = documentMsg.getElementsByClassName('PlainText');
     if (textMsg.length > 0) {
       var textAwait = textMsg[0];
-      [0];
       var el = textAwait.text;
       return el;
     } else

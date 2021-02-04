@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mpeischedule/bloc/mail/mail_bloc.dart';
 import 'package:mpeischedule/bloc/mail/mail_event.dart';
 import 'package:mpeischedule/bloc/mail/mail_state.dart';
-import 'package:mpeischedule/sevices/mail_repository.dart';
+import 'package:mpeischedule/sevices/mail/mail_repository.dart';
 import 'package:mpeischedule/ui/mail/message_detail.dart';
 
 class MailPage extends StatelessWidget {

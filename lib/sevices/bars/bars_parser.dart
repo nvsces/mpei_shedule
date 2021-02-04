@@ -7,11 +7,8 @@ class BarsParser {
   //очистить куки .clearStoredCookies(hostname)
 
   static Future<bool> init(String login, String password) async {
-    //'ShanyginDS'
-    //'mit463u'
     Map<String, String> body = {'UserName': login, 'Password': password};
     var r = await req.Requests.post(bars_base_url, body: body);
-    //get('https://google.com');
     r.raiseForStatus();
     var d = await req.Requests.get(bars_base_url);
     String dbody = d.content();

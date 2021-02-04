@@ -13,11 +13,9 @@ import 'package:mpeischedule/bloc/theme/theme_bloc.dart';
 import 'package:mpeischedule/bloc/theme/theme_evemt.dart';
 import 'package:mpeischedule/bloc/theme/theme_state.dart';
 import 'package:mpeischedule/generated/l10n.dart';
-import 'package:mpeischedule/sevices/mail_parser.dart';
 import 'package:mpeischedule/theme.dart';
-import 'package:mpeischedule/ui/bars/auth_mpei.dart';
-import 'package:mpeischedule/ui/bars/mpei_landing_bars.dart';
-import 'package:mpeischedule/ui/mail/mpei_landing_mail.dart';
+import 'package:mpeischedule/ui/bars/bars_page.dart';
+import 'package:mpeischedule/ui/mpei_landing.dart';
 import 'package:mpeischedule/ui/shedule/landing.dart';
 import 'package:mpeischedule/ui/mail/mail_page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -33,7 +31,6 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
-    //MailParser.getListHeader();
     return MultiBlocProvider(
         providers: [
           BlocProvider<AuthBloc>(
@@ -73,11 +70,9 @@ class _HomeScaffoldState extends State<HomeScaffold> {
 
   final pages = <Widget>[
     LandingPage(),
-    // MailPage(),
-    MpeiLandingPageMail(),
-    MpeiLandingPageBars(),
+    MpeiLandingPage(MailPage()),
+    MpeiLandingPage(BarsPage()),
   ];
-  //  AuthMpei()];
 
   Widget iconExit(BuildContext context) {
     AuthBloc authBlocC = BlocProvider.of(context);

@@ -1,4 +1,4 @@
-import 'package:mpeischedule/sevices/bars_parser.dart';
+import 'package:mpeischedule/sevices/bars/bars_parser.dart';
 
 class BarsProvider {
   Future<String> getUresName() async {

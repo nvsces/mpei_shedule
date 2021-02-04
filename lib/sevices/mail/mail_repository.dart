@@ -1,6 +1,6 @@
 import 'package:mpeischedule/models/mail_header.dart';
-import 'package:mpeischedule/sevices/mail_api_provider.dart';
-import 'package:mpeischedule/sevices/mail_parser.dart';
+import 'package:mpeischedule/sevices/mail/mail_api_provider.dart';
+import 'package:mpeischedule/sevices/mail/mail_parser.dart';
 
 class MailRepository {
   MailProvider _mailProvider = MailProvider();
