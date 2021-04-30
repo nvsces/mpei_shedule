@@ -11,15 +11,15 @@ class SheduleLoadingState extends SheduleState {}
 class SheduleEmptyState extends SheduleState {}
 
 class SheduleLoadedState extends SheduleState {
-  List<DayLesson> loadedLesson;
+  List<DayLesson?>? loadedLesson;
   List<String> listDayName;
   String groupId;
   DateTime dateTime;
   SheduleLoadedState(
-      {@required this.loadedLesson,
-      @required this.groupId,
-      @required this.dateTime,
-      @required this.listDayName})
+      {required this.loadedLesson,
+      required this.groupId,
+      required this.dateTime,
+      required this.listDayName})
       : assert(loadedLesson != null);
 }
 

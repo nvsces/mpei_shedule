@@ -8,8 +8,10 @@ import 'package:mpeischedule/models/day_lesson.dart';
 import 'package:mpeischedule/models/lesson.dart';
 
 class DayInfoLesson extends StatelessWidget {
-  List<DayLesson> listDay;
-  DayInfoLesson({@required this.listDay, Key key}) : super(key: key);
+  List<DayLesson?>? listDay;
+  DayInfoLesson({
+    required this.listDay,
+  });
   PageController controller = PageController(initialPage: 0);
 
   Widget buildListView(BuildContext ctx, List<Lesson> _sheduleList) {
@@ -30,7 +32,7 @@ class DayInfoLesson extends StatelessWidget {
                   decoration: BoxDecoration(
                     borderRadius: BorderRadiusDirectional.circular(10),
                     gradient: LinearGradient(
-                        colors: [Colors.grey[800], Colors.grey[850]],
+                        colors: [Colors.grey, Colors.grey],
                         begin: Alignment(1.0, 0.0),
                         end: Alignment(1.0, 1.0)),
                   ),
@@ -45,7 +47,7 @@ class DayInfoLesson extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
                           Text(
-                            _sheduleList[index].name,
+                            _sheduleList[index].name!,
                             textAlign: TextAlign.start,
                             style: TextStyle(
                                 fontWeight: FontWeight.bold, fontSize: 15),
@@ -53,30 +55,30 @@ class DayInfoLesson extends StatelessWidget {
                           //Row(
                           // children: <Widget>[
                           //  Icon(Icons.school),
-                          Text(_sheduleList[index].type,
+                          Text(_sheduleList[index].type!,
                               textAlign: TextAlign.start),
                           //  ],
                           // ),
                           Row(
                             children: <Widget>[
                               Icon(Icons.location_on),
-                              Text(_sheduleList[index].auditorium,
+                              Text(_sheduleList[index].auditorium!,
                                   textAlign: TextAlign.start)
                             ],
                           ),
                           Row(
                             children: <Widget>[
                               Icon(Icons.directions_walk),
-                              Text(_sheduleList[index].group,
+                              Text(_sheduleList[index].group!,
                                   textAlign: TextAlign.start),
                             ],
                           ),
-                          _sheduleList[index].lecturer.isEmpty
+                          _sheduleList[index].lecturer!.isEmpty
                               ? Text('')
                               : Row(
                                   children: <Widget>[
                                     Icon(Icons.person),
-                                    Text(_sheduleList[index].lecturer,
+                                    Text(_sheduleList[index].lecturer!,
                                         textAlign: TextAlign.start),
                                   ],
                                 )
@@ -84,7 +86,7 @@ class DayInfoLesson extends StatelessWidget {
                       )),
                       // Expanded(
                       //     child:
-                      Text(_sheduleList[index].time, textAlign: TextAlign.end)
+                      Text(_sheduleList[index].time!, textAlign: TextAlign.end)
                       //)
                     ],
                   )));
@@ -108,9 +110,9 @@ class DayInfoLesson extends StatelessWidget {
                 ctrlbloc.add(CtrlCurrentEvent(number));
               },
               controller: controller,
-              itemCount: listDay.length,
+              itemCount: listDay!.length,
               itemBuilder: (context, index) {
-                if (listDay[index] == null) {
+                if (listDay![index] == null) {
                   return Center(
                       child: ListTile(
                     title: Image.asset(
@@ -129,8 +131,8 @@ class DayInfoLesson extends StatelessWidget {
                       alignment: Alignment.center,
                       child: Column(
                         children: <Widget>[
-                          Text(listDay[index].date),
-                          buildListView(context, listDay[index].lesson)
+                          Text(listDay![index]!.date!),
+                          buildListView(context, listDay![index]!.lesson!)
                         ],
                       ));
                 //Text(listShdl[index].auditorium)

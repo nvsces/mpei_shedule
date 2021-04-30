@@ -6,23 +6,17 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:mpeischedule/bloc/authShedule/auth_bloc.dart';
 import 'package:mpeischedule/bloc/authShedule/auth_event.dart';
 import 'package:mpeischedule/bloc/authShedule/auth_state.dart';
-import 'package:mpeischedule/bloc/auth_mpei_services/auth_services_bloc.dart';
-import 'package:mpeischedule/bloc/auth_mpei_services/auth_services_event.dart';
-import 'package:mpeischedule/bloc/auth_mpei_services/auth_services_state.dart';
 import 'package:mpeischedule/bloc/theme/theme_bloc.dart';
 import 'package:mpeischedule/bloc/theme/theme_evemt.dart';
 import 'package:mpeischedule/bloc/theme/theme_state.dart';
 import 'package:mpeischedule/generated/l10n.dart';
 import 'package:mpeischedule/theme.dart';
-import 'package:mpeischedule/ui/bars/bars_page.dart';
-import 'package:mpeischedule/ui/mpei_landing.dart';
 import 'package:mpeischedule/ui/shedule/landing.dart';
-import 'package:mpeischedule/ui/mail/mail_page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class HomePage extends StatefulWidget {
   AuthState authState;
-  HomePage(this.authState, {Key key}) : super(key: key);
+  HomePage(this.authState);
 
   @override
   _HomePageState createState() => _HomePageState();
@@ -31,35 +25,31 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
-    return MultiBlocProvider(
-        providers: [
-          BlocProvider<AuthBloc>(
-            create: (BuildContext context) => AuthBloc(widget.authState),
-          ),
-          BlocProvider<MpeiAuthBloc>(
-            create: (BuildContext context) => MpeiAuthBloc(MpeiFirstState()),
-          ),
-        ],
-        child: AdaptiveTheme(
-            light: kLightTheme,
-            dark: kDarkTheme,
-            initial: AdaptiveThemeMode.dark,
-            builder: (light, dark) => MaterialApp(
-                    localizationsDelegates: [
-                      S.delegate,
-                      GlobalMaterialLocalizations.delegate,
-                      GlobalWidgetsLocalizations.delegate,
-                      GlobalCupertinoLocalizations.delegate,
-                    ],
-                    supportedLocales: S.delegate.supportedLocales,
-                    darkTheme: dark,
-                    theme: light,
-                    home: HomeScaffold())));
+    return BlocProvider(
+      create: (context) => AuthBloc(widget.authState),
+      child: AdaptiveTheme(
+        light: kLightTheme,
+        dark: kDarkTheme,
+        initial: AdaptiveThemeMode.dark,
+        builder: (light, dark) => MaterialApp(
+          localizationsDelegates: [
+            S.delegate,
+            GlobalMaterialLocalizations.delegate,
+            GlobalWidgetsLocalizations.delegate,
+            GlobalCupertinoLocalizations.delegate,
+          ],
+          supportedLocales: S.delegate.supportedLocales,
+          darkTheme: dark,
+          theme: light,
+          home: HomeScaffold(),
+        ),
+      ),
+    );
   }
 }
 
 class HomeScaffold extends StatefulWidget {
-  const HomeScaffold({Key key}) : super(key: key);
+  const HomeScaffold();
 
   @override
   _HomeScaffoldState createState() => _HomeScaffoldState();
@@ -70,18 +60,12 @@ class _HomeScaffoldState extends State<HomeScaffold> {
 
   final pages = <Widget>[
     LandingPage(),
-    MpeiLandingPage(MailPage()),
-    MpeiLandingPage(BarsPage()),
   ];
 
   Widget iconExit(BuildContext context) {
-    AuthBloc authBlocC = BlocProvider.of(context);
-    MpeiAuthBloc mpeiAuthBlocC = BlocProvider.of(context);
     return IconButton(
         icon: Icon(Icons.exit_to_app),
         onPressed: () async {
-          authBlocC.add(ExitEvent());
-          mpeiAuthBlocC.add(MpeiExitEvent());
           SharedPreferences pref = await SharedPreferences.getInstance();
           pref.remove('group');
         });
@@ -121,35 +105,32 @@ class _HomeScaffoldState extends State<HomeScaffold> {
                 )
               ],
             ),
-            body: IndexedStack(
-              children: pages,
-              index: _currentPage,
-            ),
-            bottomNavigationBar: BottomNavigationBar(
-              currentIndex: _currentPage,
-              onTap: (int index) {
-                setState(() {
-                  _currentPage = index;
-                });
-              },
-              backgroundColor: Theme.of(context).backgroundColor,
-              selectedItemColor:
-                  Theme.of(context).accentTextTheme.bodyText1.color,
-              items: [
-                BottomNavigationBarItem(
-                  icon: Icon(Icons.home),
-                  title: Text("Расписание"),
-                ),
-                BottomNavigationBarItem(
-                  icon: Icon(Icons.mail),
-                  title: Text("Почта"),
-                ),
-                BottomNavigationBarItem(
-                  icon: Icon(Icons.circle),
-                  title: Text("Барс"),
-                ),
-              ],
-            ),
+            body: LandingPage(),
+            // bottomNavigationBar: BottomNavigationBar(
+            //   currentIndex: _currentPage,
+            //   onTap: (int index) {
+            //     setState(() {
+            //       _currentPage = index;
+            //     });
+            //   },
+            //   backgroundColor: Theme.of(context).backgroundColor,
+            //   selectedItemColor:
+            //       Theme.of(context).accentTextTheme.bodyText1!.color,
+            //   items: [
+            //     BottomNavigationBarItem(
+            //       icon: Icon(Icons.home),
+            //       title: Text("Расписание"),
+            //     ),
+            //     BottomNavigationBarItem(
+            //       icon: Icon(Icons.mail),
+            //       title: Text("Почта"),
+            //     ),
+            //     BottomNavigationBarItem(
+            //       icon: Icon(Icons.circle),
+            //       title: Text("Барс"),
+            //     ),
+            //   ],
+            // ),
           );
         }));
   }

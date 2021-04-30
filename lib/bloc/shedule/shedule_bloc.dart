@@ -7,22 +7,22 @@ import 'package:mpeischedule/sevices/shedule/shedule_repository.dart';
 class SheduleBloc extends Bloc<SheduleEvent, SheduleState> {
   final SheduleRepository sheduleRepository;
 
-  SheduleBloc({this.sheduleRepository}) : super(SheduleFirstState());
+  SheduleBloc({required this.sheduleRepository}) : super(SheduleFirstState());
 
   @override
   Stream<SheduleState> mapEventToState(SheduleEvent event) async* {
     if (event is SheduleLoadEvent) {
       yield SheduleLoadingState();
       try {
-        final List<String> param =
+        final List<String?>? param =
             await sheduleRepository.getGroupId(name: event.namrGroup);
-        final List<DayLesson> _loadLessonList =
+        final List<DayLesson?>? _loadLessonList =
             await sheduleRepository.getAllDayLesson(name: event.namrGroup);
-        var date = DateTime.parse(param[1].replaceAll('.', '-'))
+        var date = DateTime.parse(param![1]!.replaceAll('.', '-'))
             .subtract(Duration(days: 7));
         yield SheduleLoadedState(
             loadedLesson: _loadLessonList,
-            groupId: param[0],
+            groupId: param[0]!,
             dateTime: date,
             listDayName: _createDateList(date));
       } catch (_) {
@@ -33,8 +33,8 @@ class SheduleBloc extends Bloc<SheduleEvent, SheduleState> {
       try {
         var date = event.date.add(Duration(days: 7));
         var dateString = date.toString().replaceAll('-', '.').substring(0, 10);
-        final List<DayLesson> _loadLessonList = await sheduleRepository.getDay(
-            name: event.namrGroup, date: dateString);
+        final List<DayLesson?>? _loadLessonList = await sheduleRepository
+            .getDay(name: event.namrGroup, date: dateString);
 
         yield SheduleLoadedState(
             loadedLesson: _loadLessonList,
@@ -49,8 +49,8 @@ class SheduleBloc extends Bloc<SheduleEvent, SheduleState> {
       try {
         var date = event.date.subtract(Duration(days: 7));
         var dateString = date.toString().replaceAll('-', '.').substring(0, 10);
-        final List<DayLesson> _loadLessonList = await sheduleRepository.getDay(
-            name: event.namrGroup, date: dateString);
+        final List<DayLesson?>? _loadLessonList = await sheduleRepository
+            .getDay(name: event.namrGroup, date: dateString);
 
         yield SheduleLoadedState(
             loadedLesson: _loadLessonList,

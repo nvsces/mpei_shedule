@@ -1,12 +1,12 @@
 import 'package:flutter/foundation.dart';
 
 class Lesson {
-  String name;
-  String type;
-  String auditorium;
-  String group;
-  String lecturer;
-  String time;
+  String? name;
+  String? type;
+  String? auditorium;
+  String? group;
+  String? lecturer;
+  String? time;
 
   Lesson(
       {@required this.name,

@@ -2,11 +2,11 @@ import 'package:flutter/foundation.dart';
 import 'package:mpeischedule/models/lesson.dart';
 
 class DayLesson {
-  String day;
-  String date;
-  String groupId;
+  String? day;
+  String? date;
+  String? groupId;
 
-  List<Lesson> lesson;
+  List<Lesson>? lesson;
 
   DayLesson(
     @required this.day,

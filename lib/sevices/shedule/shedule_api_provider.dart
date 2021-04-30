@@ -8,16 +8,16 @@ import 'package:mpeischedule/models/lesson.dart';
 enum ActionEvent { next, back, now }
 
 class SheduleProvider {
-  List<DayLesson> createEmptyListDay() {
-    List<DayLesson> list = [];
+  List<DayLesson?> createEmptyListDay() {
+    List<DayLesson?> list = [];
     for (int i = 0; i < 7; i++) {
       list.add(null);
     }
     return list;
   }
 
-  List<DayLesson> initPage(List<DayLesson> dayList) {
-    List<DayLesson> pageList = [];
+  List<DayLesson?> initPage(List<DayLesson> dayList) {
+    List<DayLesson?> pageList = [];
     for (int i = 0; i < 7; i++) {
       pageList.add(null);
     }
@@ -46,7 +46,7 @@ class SheduleProvider {
     print(pageList.length);
     for (int j = 0; j < pageList.length; j++) {
       if (pageList[j] != null) {
-        print('$j:${pageList[j].date}');
+        print('$j:${pageList[j]!.date}');
       } else {
         print('null');
       }
@@ -55,9 +55,7 @@ class SheduleProvider {
     return pageList;
   }
 
-  Future<String> getCurrentDateTime() async {}
-
-  Future<List<String>> getGroupId({String groupName}) async {
+  Future<List<String>?> getGroupId({required String groupName}) async {
     Response commonResponse = await fetchHttpShedule(
         'https://mpei.ru/Education/timetable/Pages/default.aspx?group=' +
             groupName);
@@ -80,8 +78,8 @@ class SheduleProvider {
     }
   }
 
-  Future<List<DayLesson>> dayListAction(String groupId, String date) async {
-    List<DayLesson> pageListDayLesson;
+  Future<List<DayLesson?>> dayListAction(String groupId, String date) async {
+    List<DayLesson?> pageListDayLesson;
     Response response = await fetchHttpShedule(
         'https://mpei.ru/Education/timetable/Pages/table.aspx?groupoid=' +
             groupId +
@@ -105,9 +103,9 @@ class SheduleProvider {
     }
   }
 
-  Future<List<DayLesson>> getDayListLessonFull(
-      {String groupId, ActionEvent action}) async {
-    List<DayLesson> pageListDayLesson;
+  Future<List<DayLesson?>?> getDayListLessonFull(
+      {required String groupId, required ActionEvent action}) async {
+    List<DayLesson?>? pageListDayLesson;
 
     String urlNow =
         'https://mpei.ru/Education/timetable/Pages/default.aspx?group=';
@@ -143,8 +141,8 @@ class SheduleProvider {
     }
   }
 
-  Future<List<DayLesson>> testhttpparse(String urlhttp) async {
-    List<DayLesson> pageListDayLesson;
+  Future<List<DayLesson?>?> testhttpparse(String urlhttp) async {
+    List<DayLesson?> pageListDayLesson;
 
     Response response = await fetchHttpShedule(urlhttp);
 

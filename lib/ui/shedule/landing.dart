@@ -2,14 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mpeischedule/bloc/authShedule/auth_event.dart';
 import 'package:mpeischedule/bloc/authShedule/auth_state.dart';
-import 'package:mpeischedule/bloc/auth_mpei_services/auth_services_bloc.dart';
 import 'package:mpeischedule/generated/l10n.dart';
 import 'package:mpeischedule/ui/shedule/home_body_bloc.dart';
 import 'package:mpeischedule/bloc/authShedule/auth_bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class LandingPage extends StatefulWidget {
-  const LandingPage({Key key}) : super(key: key);
+  const LandingPage();
 
   @override
   _LandingPageState createState() => _LandingPageState();
