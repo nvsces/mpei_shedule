@@ -30,7 +30,7 @@ class _HomePageState extends State<HomePage> {
       child: AdaptiveTheme(
         light: kLightTheme,
         dark: kDarkTheme,
-        initial: AdaptiveThemeMode.dark,
+        initial: AdaptiveThemeMode.light,
         builder: (light, dark) => MaterialApp(
           localizationsDelegates: [
             S.delegate,
@@ -56,18 +56,13 @@ class HomeScaffold extends StatefulWidget {
 }
 
 class _HomeScaffoldState extends State<HomeScaffold> {
-  int _currentPage = 0;
-
-  final pages = <Widget>[
-    LandingPage(),
-  ];
-
   Widget iconExit(BuildContext context) {
     return IconButton(
         icon: Icon(Icons.exit_to_app),
         onPressed: () async {
           SharedPreferences pref = await SharedPreferences.getInstance();
           pref.remove('group');
+          context.read<AuthBloc>().add(ExitEvent());
         });
   }
 
@@ -82,13 +77,13 @@ class _HomeScaffoldState extends State<HomeScaffold> {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-        create: (context) => ThemeBloc(),
-        child: BlocBuilder<ThemeBloc, ThemeState>(builder: (context, state) {
+      create: (context) => ThemeBloc(),
+      child: BlocBuilder<ThemeBloc, ThemeState>(
+        builder: (context, state) {
           final ThemeBloc themeBloc = BlocProvider.of(context);
           final themeAdaptiv = AdaptiveTheme.of(context);
           return Scaffold(
             appBar: AppBar(
-              backgroundColor: Colors.black54,
               title: Text('Расписание'),
               actions: [
                 iconExit(context),
@@ -106,32 +101,9 @@ class _HomeScaffoldState extends State<HomeScaffold> {
               ],
             ),
             body: LandingPage(),
-            // bottomNavigationBar: BottomNavigationBar(
-            //   currentIndex: _currentPage,
-            //   onTap: (int index) {
-            //     setState(() {
-            //       _currentPage = index;
-            //     });
-            //   },
-            //   backgroundColor: Theme.of(context).backgroundColor,
-            //   selectedItemColor:
-            //       Theme.of(context).accentTextTheme.bodyText1!.color,
-            //   items: [
-            //     BottomNavigationBarItem(
-            //       icon: Icon(Icons.home),
-            //       title: Text("Расписание"),
-            //     ),
-            //     BottomNavigationBarItem(
-            //       icon: Icon(Icons.mail),
-            //       title: Text("Почта"),
-            //     ),
-            //     BottomNavigationBarItem(
-            //       icon: Icon(Icons.circle),
-            //       title: Text("Барс"),
-            //     ),
-            //   ],
-            // ),
           );
-        }));
+        },
+      ),
+    );
   }
 }

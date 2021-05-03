@@ -6,9 +6,8 @@ import 'package:mpeischedule/bloc/controller/controller_state.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 
 class ScrollDay extends StatelessWidget {
-  //ScrollDay({Key key}) : super(key: key);
   List<String> listTime;
-  List<String> day = ["Пон", "Вт", "Ср", "Чет", "Пят", "Суб", "Вос"];
+  List<String> day = ["Пон", "Вт", "Ср", "Чет", "Пят", "Суб"];
   ItemScrollController _scrollController = ItemScrollController();
 
   ScrollDay(this.listTime);
@@ -28,12 +27,16 @@ class ScrollDay extends StatelessWidget {
         ),
         decoration: BoxDecoration(
             color: (state as CtrlIndexState).sectionIndex == index
-                ? Colors.grey[700]
+                ? Theme.of(context).accentColor
                 : Colors.grey[850],
             borderRadius: BorderRadius.circular(10.0)),
         child: Text(
           day[index] + ' ' + listTime[index],
-          style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
+          style: (state as CtrlIndexState).sectionIndex == index
+              ? TextStyle(
+                  fontWeight: FontWeight.bold,
+                  color: Theme.of(context).scaffoldBackgroundColor)
+              : TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
         ),
       ),
     );

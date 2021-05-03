@@ -10,7 +10,7 @@ import 'package:mpeischedule/bloc/shedule/shedule_event.dart';
 import 'package:mpeischedule/bloc/shedule/shedule_state.dart';
 import 'package:mpeischedule/generated/l10n.dart';
 import 'package:mpeischedule/sevices/shedule/shedule_repository.dart';
-import 'package:mpeischedule/ui/shedule/day_Info.dart';
+import 'package:mpeischedule/ui/day_info/day_Info.dart';
 import 'package:mpeischedule/ui/shedule/scrool_day.dart';
 
 class BodyBloc extends StatelessWidget {
@@ -21,45 +21,57 @@ class BodyBloc extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider<SheduleBloc>(
-        create: (context) => SheduleBloc(sheduleRepository: sheduleRepository),
-        child: BlocProvider<ControllerBloc>(
-            create: (context) => ControllerBloc(),
-            child: BlocBuilder<SheduleBloc, SheduleState>(
-              builder: (context, state) {
-                final SheduleBloc sheduleBloc = BlocProvider.of(context);
-                final ControllerBloc ctrlBloc = BlocProvider.of(context);
-                if (state is SheduleFirstState) {
-                  sheduleBloc.add(SheduleLoadEvent(
-                      namrGroup: nameGroup, date: DateTime.now()));
-                  return Center(child: CircularProgressIndicator());
-                }
-                if (state is SheduleLoadingState) {
-                  return Center(child: CircularProgressIndicator());
-                }
-                if (state is SheduleLoadedState) {
-                  return Column(
-                    children: <Widget>[
-                      buildSheduleTile(state, sheduleBloc, ctrlBloc),
-                      ScrollDay(state.listDayName),
-                      DayInfoLesson(listDay: state.loadedLesson)
-                    ],
-                  );
-                }
-                final AuthBloc authBlocC = BlocProvider.of(context);
-                return Center(
-                    child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    Text(S.of(context).error_shedule),
-                    RaisedButton(
-                        child: Text(S.of(context).choose_group_label),
-                        onPressed: () {
-                          authBlocC.add(ExitEvent());
-                        })
-                  ],
-                ));
-              },
-            )));
+      create: (context) => SheduleBloc(sheduleRepository: sheduleRepository),
+      child: BlocProvider<ControllerBloc>(
+        create: (context) => ControllerBloc(),
+        child: BlocBuilder<SheduleBloc, SheduleState>(
+          builder: (context, state) {
+            final SheduleBloc sheduleBloc = BlocProvider.of(context);
+            final ControllerBloc ctrlBloc = BlocProvider.of(context);
+            if (state is SheduleFirstState) {
+              sheduleBloc.add(
+                  SheduleLoadEvent(namrGroup: nameGroup, date: DateTime.now()));
+              return Center(child: CircularProgressIndicator());
+            }
+            if (state is SheduleLoadingState) {
+              return Center(child: CircularProgressIndicator());
+            }
+            if (state is SheduleLoadedState) {
+              return Column(
+                children: <Widget>[
+                  buildSheduleTile(state, sheduleBloc, ctrlBloc),
+                  ScrollDay(state.listDayName),
+                  DayInfoLesson(listDay: state.loadedLesson)
+                ],
+              );
+            }
+            final AuthBloc authBlocC = BlocProvider.of(context);
+            return Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Text(S.of(context).error_shedule),
+                  ElevatedButton(
+                    style: ButtonStyle(
+                        backgroundColor: MaterialStateProperty.all<Color>(
+                            Theme.of(context).accentColor)),
+                    child: Text(
+                      S.of(context).choose_group_label,
+                      style: TextStyle(
+                          fontSize: 20,
+                          color: Theme.of(context).scaffoldBackgroundColor),
+                    ),
+                    onPressed: () {
+                      authBlocC.add(ExitEvent());
+                    },
+                  )
+                ],
+              ),
+            );
+          },
+        ),
+      ),
+    );
   }
 
   Widget buildSheduleTile(SheduleLoadedState state, SheduleBloc sheduleBloc,

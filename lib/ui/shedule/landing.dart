@@ -19,58 +19,69 @@ class _LandingPageState extends State<LandingPage> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<AuthBloc, AuthState>(builder: (context, state) {
-      if (state is LoginState) {
-        return BodyBloc(state.nameGroup);
-      } else {
-        final AuthBloc authBloc = BlocProvider.of(context);
-        return Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Padding(
-              padding: EdgeInsets.all(30),
-              child: TextField(
-                textAlign: TextAlign.center,
-                cursorHeight: 12,
-                textCapitalization: TextCapitalization.characters,
-                controller: _controller,
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(),
-                  labelText: S.of(context).input_name_group_label,
-                ),
-              ),
-            ),
-            Padding(
-              padding: EdgeInsets.all(30),
-              child: RaisedButton(
-                onPressed: () async {
-                  var nameGroup = _controller.text.toString();
-                  authBloc.add(LoginEvent(nameGroup));
-                  SharedPreferences pref =
-                      await SharedPreferences.getInstance();
-                  pref.setString('group', nameGroup);
-                },
-                textColor: Colors.white,
-                padding: const EdgeInsets.all(0.0),
-                child: Container(
-                  decoration: const BoxDecoration(
-                    gradient: LinearGradient(
-                      colors: <Color>[
-                        Color(0xFF0D47A1),
-                        Color(0xFF1976D2),
-                        Color(0xFF42A5F5),
-                      ],
+    return BlocBuilder<AuthBloc, AuthState>(
+      builder: (context, state) {
+        if (state is LoginState) {
+          return BodyBloc(state.nameGroup);
+        } else {
+          final AuthBloc authBloc = BlocProvider.of(context);
+          return Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Padding(
+                padding: EdgeInsets.all(30),
+                child: TextField(
+                  style: TextStyle(color: Theme.of(context).accentColor),
+                  textAlign: TextAlign.center,
+                  cursorHeight: 12,
+                  textCapitalization: TextCapitalization.characters,
+                  controller: _controller,
+                  decoration: InputDecoration(
+                    labelStyle: TextStyle(color: Theme.of(context).accentColor),
+                    helperStyle:
+                        TextStyle(color: Theme.of(context).accentColor),
+                    hintStyle: TextStyle(color: Theme.of(context).accentColor),
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: BorderSide(
+                          color: Theme.of(context).accentColor, width: 2.0),
                     ),
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(
+                          color: Theme.of(context).accentColor, width: 2.0),
+                    ),
+                    border: OutlineInputBorder(
+                      borderSide: BorderSide(
+                          color: Theme.of(context).accentColor, width: 2.0),
+                    ),
+                    labelText: S.of(context).input_name_group_label,
                   ),
-                  padding: const EdgeInsets.all(10.0),
-                  child: Text(S.of(context).landing_btn_label,
-                      style: TextStyle(fontSize: 20)),
                 ),
               ),
-            ),
-          ],
-        );
-      }
-    });
+              Padding(
+                padding: EdgeInsets.all(30),
+                child: ElevatedButton(
+                  onPressed: () async {
+                    var nameGroup = _controller.text.toString();
+                    authBloc.add(LoginEvent(nameGroup));
+                    SharedPreferences pref =
+                        await SharedPreferences.getInstance();
+                    pref.setString('group', nameGroup);
+                  },
+                  style: ButtonStyle(
+                      backgroundColor: MaterialStateProperty.all<Color>(
+                          Theme.of(context).accentColor)),
+                  child: Text(
+                    S.of(context).landing_btn_label,
+                    style: TextStyle(
+                        fontSize: 20,
+                        color: Theme.of(context).scaffoldBackgroundColor),
+                  ),
+                ),
+              ),
+            ],
+          );
+        }
+      },
+    );
   }
 }

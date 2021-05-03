@@ -10,7 +10,7 @@ enum ActionEvent { next, back, now }
 class SheduleProvider {
   List<DayLesson?> createEmptyListDay() {
     List<DayLesson?> list = [];
-    for (int i = 0; i < 7; i++) {
+    for (int i = 0; i < 6; i++) {
       list.add(null);
     }
     return list;
@@ -18,7 +18,7 @@ class SheduleProvider {
 
   List<DayLesson?> initPage(List<DayLesson> dayList) {
     List<DayLesson?> pageList = [];
-    for (int i = 0; i < 7; i++) {
+    for (int i = 0; i < 6; i++) {
       pageList.add(null);
     }
     for (int j = 0; j < dayList.length; j++) {

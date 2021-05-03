@@ -4,7 +4,7 @@ import 'package:mpeischedule/bloc/theme/theme_evemt.dart';
 import 'package:mpeischedule/bloc/theme/theme_state.dart';
 
 class ThemeBloc extends Bloc<ThemeEvent, ThemeState> {
-  ThemeBloc() : super(ThemeState(true));
+  ThemeBloc() : super(ThemeState(false));
 
   @override
   Stream<ThemeState> mapEventToState(ThemeEvent event) async* {

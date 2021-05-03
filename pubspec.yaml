@@ -37,10 +37,14 @@ dependencies:
   intl: ^0.17.0
   html: ^0.15.0
   scrollable_positioned_list: 0.2.0-nullsafety.0
-  # requests: ^3.3.0
   adaptive_theme: any
-  # webview_flutter: ^1.0.7
-  # webview_cookie_manager: ^1.0.7
+  flutter_launcher_icons: ^0.9.0
+
+
+flutter_icons:
+  android: "launcher_icon"
+  ios: true
+  image_path: "assets/image/splash.png"
 
 dev_dependencies:
   flutter_test:
