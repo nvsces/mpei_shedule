@@ -1,11 +1,15 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mpeischedule/bloc/shedule/shedule_event.dart';
 import 'package:mpeischedule/bloc/shedule/shedule_state.dart';
+import 'package:mpeischedule/feature/data/datasources/lesson_day_remote_data_source.dart';
+import 'package:mpeischedule/feature/data/datasources/parser_data_source.dart';
+import 'package:mpeischedule/feature/domain/usecases/get_all_day_lesson.dart';
 import 'package:mpeischedule/models/day_lesson.dart';
 import 'package:mpeischedule/sevices/shedule/shedule_repository.dart';
 
 class SheduleBloc extends Bloc<SheduleEvent, SheduleState> {
   final SheduleRepository sheduleRepository;
+  LessonDayRemoteDataSourceImpl dataSource = LessonDayRemoteDataSourceImpl();
 
   SheduleBloc({required this.sheduleRepository}) : super(SheduleFirstState());
 
@@ -18,6 +22,11 @@ class SheduleBloc extends Bloc<SheduleEvent, SheduleState> {
             await sheduleRepository.getGroupId(name: event.namrGroup);
         final List<DayLesson?>? _loadLessonList =
             await sheduleRepository.getAllDayLesson(name: event.namrGroup);
+        var testDataSource = await dataSource.getAllLessonDay(event.namrGroup);
+        print(testDataSource);
+        var parseStatic = await ParserDataSource.getDayListLessonFull(
+            action: ActionEvent.now, groupName: event.namrGroup);
+        print(parseStatic);
         var date = DateTime.parse(param![1]!.replaceAll('.', '-'))
             .subtract(Duration(days: 7));
         yield SheduleLoadedState(

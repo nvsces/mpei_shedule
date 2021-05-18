@@ -1,14 +1,14 @@
 import 'package:equatable/equatable.dart';
 
 class LessonDayEntity extends Equatable {
-  final String dayTime;
-  final String groupId;
+  final String weekLabel;
+  final String dateTime;
 
   LessonDayEntity({
-    required this.dayTime,
-    required this.groupId,
+    required this.weekLabel,
+    required this.dateTime,
   });
 
   @override
-  List<Object?> get props => [dayTime, groupId];
+  List<Object?> get props => [weekLabel, dateTime];
 }
