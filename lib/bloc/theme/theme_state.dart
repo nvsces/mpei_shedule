@@ -1,4 +1,4 @@
 class ThemeState {
   bool isDarkTheme;
-  ThemeState(this.isDarkTheme);
+  ThemeState({required this.isDarkTheme});
 }

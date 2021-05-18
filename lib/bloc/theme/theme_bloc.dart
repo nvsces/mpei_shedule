@@ -4,17 +4,17 @@ import 'package:mpeischedule/bloc/theme/theme_evemt.dart';
 import 'package:mpeischedule/bloc/theme/theme_state.dart';
 
 class ThemeBloc extends Bloc<ThemeEvent, ThemeState> {
-  ThemeBloc() : super(ThemeState(false));
+  ThemeBloc() : super(ThemeState(isDarkTheme: false));
 
   @override
   Stream<ThemeState> mapEventToState(ThemeEvent event) async* {
     if (event is ThemeLightEvent) {
       event.themeAdaptiv.setLight();
-      yield ThemeState(false);
+      yield ThemeState(isDarkTheme: false);
     }
     if (event is ThemeDarkEvent) {
       event.themeAdaptiv.setDark();
-      yield ThemeState(true);
+      yield ThemeState(isDarkTheme: false);
     }
   }
 }

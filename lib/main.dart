@@ -7,7 +7,7 @@ import 'bloc/authShedule/auth_state.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   SharedPreferences preferences = await SharedPreferences.getInstance();
-  var nameGroup = preferences.getString('group') ?? "";
+  final String nameGroup = preferences.getString('group') ?? "";
   AuthState state;
   if (nameGroup.isEmpty) {
     state = NotLogginState();

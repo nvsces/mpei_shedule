@@ -43,15 +43,6 @@ class SheduleProvider {
           break;
       }
     }
-    print(pageList.length);
-    for (int j = 0; j < pageList.length; j++) {
-      if (pageList[j] != null) {
-        print('$j:${pageList[j]!.date}');
-      } else {
-        print('null');
-      }
-    }
-
     return pageList;
   }
 
@@ -65,12 +56,9 @@ class SheduleProvider {
           .getElementsByClassName('mpei-galaktika-lessons-grid-nav')[0];
       String headerStrinId =
           header.getElementsByTagName('a')[1].attributes.values.toString();
-      print(headerStrinId);
       var groupId = headerStrinId.substring(11, 15);
       var currentDate = headerStrinId.substring(
           headerStrinId.length - 11, headerStrinId.length - 1);
-      print(currentDate);
-      print('GroupId=' + groupId);
       List<String> list = [];
       list.add(groupId);
       list.add(currentDate);
@@ -176,12 +164,12 @@ class SheduleProvider {
   String getNextHref(List<Element> weekTr) {
     var header =
         weekTr[0].getElementsByClassName('mpei-galaktika-lessons-grid-nav')[0];
-    String headerStringRight =
+    final String headerStringRight =
         header.getElementsByTagName('a')[1].attributes.values.toString();
-    var href_next =
+    final String hrefNext =
         headerStringRight.substring(1, headerStringRight.length - 1);
 
-    return href_next;
+    return hrefNext;
   }
 
   String getBackHref(List<Element> weekTr) {
@@ -189,28 +177,13 @@ class SheduleProvider {
         weekTr[0].getElementsByClassName('mpei-galaktika-lessons-grid-nav')[0];
     String headerStringLeft =
         header.getElementsByTagName('a')[0].attributes.values.toString();
-    var href_back = headerStringLeft.substring(1, headerStringLeft.length - 1);
+    String hrefBack =
+        headerStringLeft.substring(1, headerStringLeft.length - 1);
 
-    return href_back;
+    return hrefBack;
   }
 
   List<DayLesson> getListDay(List<Element> weekTr) {
-    //------------------------------------------------------//
-    //------------------------------------------------------//
-    var header =
-        weekTr[0].getElementsByClassName('mpei-galaktika-lessons-grid-nav')[0];
-    String headerStringLeft =
-        header.getElementsByTagName('a')[0].attributes.values.toString();
-    String headerStringRight =
-        header.getElementsByTagName('a')[1].attributes.values.toString();
-    var href_back = headerStringLeft.substring(1, headerStringLeft.length - 1);
-    var href_next =
-        headerStringRight.substring(1, headerStringRight.length - 1);
-    //------------------------------------------------------//
-    //------------------------------------------------------//
-
-    //day
-
     List<DayLesson> dayList = [];
     List<Lesson> listLesson = [];
     String dayWeek = "";
@@ -218,7 +191,6 @@ class SheduleProvider {
     for (int i = 1; i < weekTr.length; i++) {
       var iter =
           weekTr[i].getElementsByClassName('mpei-galaktika-lessons-grid-date');
-      print(iter);
 
       if (iter.length != 0) {
         if (i != 1) {
