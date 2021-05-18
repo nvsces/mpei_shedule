@@ -16,14 +16,6 @@ class ParserDataSource {
   static late String groupId;
   static late String currentDate;
 
-  static void inizializate(String groupName) async {
-    try {
-      List<String> params = await _getParams(groupName: groupName);
-      groupId = params[0];
-      currentDate = params[1];
-    } on ServerException {}
-  }
-
   static Future<List<LessonDayEntity>> getDayListLessonFull(
       {required String groupName, required ActionEvent action}) async {
     List<LessonDayEntity> pageListDayLesson;
@@ -226,7 +218,7 @@ class ParserDataSource {
     }
   }
 
-  static Future<List<String>> _getParams({required String groupName}) async {
+  static Future<List<String>> getParams({required String groupName}) async {
     http.Response commonResponse = await http.get(
       Uri.parse(
           'https://mpei.ru/Education/timetable/Pages/default.aspx?group=$groupName'),

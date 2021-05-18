@@ -15,7 +15,6 @@ void main() async {
     state = NotLogginState();
   } else {
     state = LoginState(nameGroup);
-    ParserDataSource.inizializate(nameGroup);
   }
   runApp(HomePage(state));
 }

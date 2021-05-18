@@ -41,9 +41,11 @@ class SheduleBloc extends Bloc<SheduleEvent, SheduleState> {
   ) async* {
     yield SheduleLoadingState();
     DateTime date = DateTime.now();
+    List<String> params =
+        await ParserDataSource.getParams(groupName: nameGroup);
     switch (action) {
       case ActionEvent.now:
-        date = DateTime.parse(ParserDataSource.currentDate.replaceAll('.', '-'))
+        date = DateTime.parse(params[1].replaceAll('.', '-'))
             .subtract(Duration(days: 7));
         break;
       case ActionEvent.back:
@@ -59,7 +61,7 @@ class SheduleBloc extends Bloc<SheduleEvent, SheduleState> {
       (failure) => SheduleErrorState(),
       (lessonday) => SheduleLoadedState(
         loadedLesson: lessonday,
-        groupId: ParserDataSource.groupId,
+        groupId: params[0],
         dateTime: date,
         listDayName: _createDateList(date),
       ),

@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mpeischedule/bloc/authShedule/auth_event.dart';
 import 'package:mpeischedule/bloc/authShedule/auth_state.dart';
 import 'package:mpeischedule/feature/data/datasources/parser_data_source.dart';
+import 'package:mpeischedule/feature/presentation/pages/day_lesson_page.dart';
 import 'package:mpeischedule/generated/l10n.dart';
 import 'package:mpeischedule/ui/shedule/home_body_bloc.dart';
 import 'package:mpeischedule/bloc/authShedule/auth_bloc.dart';
@@ -23,7 +24,8 @@ class _LandingPageState extends State<LandingPage> {
     return BlocBuilder<AuthBloc, AuthState>(
       builder: (context, state) {
         if (state is LoginState) {
-          return BodyBloc(state.nameGroup);
+          // return BodyBloc(state.nameGroup);
+          return DayLessonPage(state.nameGroup);
         } else {
           final AuthBloc authBloc = BlocProvider.of(context);
           return Column(
@@ -63,7 +65,6 @@ class _LandingPageState extends State<LandingPage> {
                 child: ElevatedButton(
                   onPressed: () async {
                     var nameGroup = _controller.text.toString();
-                    ParserDataSource.inizializate(nameGroup);
                     authBloc.add(LoginEvent(nameGroup));
                     SharedPreferences pref =
                         await SharedPreferences.getInstance();
