@@ -8,12 +8,10 @@ import 'package:mpeischedule/feature/domain/repositories/lesson_day_repositories
 class LessonDayRepositoryImpl implements LessonDayRepository {
   @override
   Future<Either<Failure, List<LessonDayEntity>>> getAllDayLesson(
-      String group, ActionEvent action) async {
+      String url) async {
     try {
-      final remoteLessonDay = await ParserDataSource.getDayListLessonFull(
-        groupName: group,
-        action: action,
-      );
+      final remoteLessonDay =
+          await ParserDataSource.getDayListLessonFull(url: url);
       return Right(remoteLessonDay);
     } on ServerException {
       return Left(ServerFailure());

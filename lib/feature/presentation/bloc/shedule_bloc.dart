@@ -41,27 +41,44 @@ class SheduleBloc extends Bloc<SheduleEvent, SheduleState> {
   ) async* {
     yield SheduleLoadingState();
     DateTime date = DateTime.now();
-    List<String> params =
-        await ParserDataSource.getParams(groupName: nameGroup);
+    String groupId = nameGroup;
+    String url = '';
     switch (action) {
       case ActionEvent.now:
-        date = DateTime.parse(params[1].replaceAll('.', '-'))
-            .subtract(Duration(days: 7));
-        break;
+        {
+          url = urlNow + nameGroup;
+          List<String> params =
+              await ParserDataSource.getParams(groupName: nameGroup);
+          date = DateTime.parse(params[1].replaceAll('.', '-'))
+              .subtract(Duration(days: 7));
+          groupId = params[0];
+          break;
+        }
       case ActionEvent.back:
-        date = dateTime.subtract(Duration(days: 7));
-        break;
+        {
+          date = dateTime.subtract(Duration(days: 7));
+          var dateString =
+              date.toString().replaceAll('-', '.').substring(0, 10);
+          url = baseUrl + nameGroup + '&start=' + dateString;
+          break;
+        }
+
       default:
-        date = dateTime.add(Duration(days: 7));
-        break;
+        {
+          date = dateTime.add(Duration(days: 7));
+          var dateString =
+              date.toString().replaceAll('-', '.').substring(0, 10);
+          url = baseUrl + nameGroup + '&start=' + dateString;
+          break;
+        }
     }
-    final failOrLessonDay = await getAllDayLesson(nameGroup, action);
+    final failOrLessonDay = await getAllDayLesson(url);
 
     yield failOrLessonDay.fold(
       (failure) => SheduleErrorState(),
       (lessonday) => SheduleLoadedState(
         loadedLesson: lessonday,
-        groupId: params[0],
+        groupId: groupId,
         dateTime: date,
         listDayName: _createDateList(date),
       ),

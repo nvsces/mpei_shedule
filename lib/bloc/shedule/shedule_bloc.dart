@@ -24,9 +24,9 @@ class SheduleBloc extends Bloc<SheduleEvent, SheduleState> {
             await sheduleRepository.getAllDayLesson(name: event.namrGroup);
         var testDataSource = await dataSource.getAllLessonDay(event.namrGroup);
         print(testDataSource);
-        var parseStatic = await ParserDataSource.getDayListLessonFull(
-            action: ActionEvent.now, groupName: event.namrGroup);
-        print(parseStatic);
+        // var parseStatic = await ParserDataSource.getDayListLessonFull(
+        //     action: ActionEvent.now, groupName: event.namrGroup);
+        //  print(parseStatic);
         var date = DateTime.parse(param![1]!.replaceAll('.', '-'))
             .subtract(Duration(days: 7));
         yield SheduleLoadedState(

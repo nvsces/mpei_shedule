@@ -4,6 +4,5 @@ import 'package:mpeischedule/feature/data/datasources/parser_data_source.dart';
 import 'package:mpeischedule/feature/domain/entities/lesson_day_entities.dart';
 
 abstract class LessonDayRepository {
-  Future<Either<Failure, List<LessonDayEntity>>> getAllDayLesson(
-      String group, ActionEvent action);
+  Future<Either<Failure, List<LessonDayEntity>>> getAllDayLesson(String url);
 }

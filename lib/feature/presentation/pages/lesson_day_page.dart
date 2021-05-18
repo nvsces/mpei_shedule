@@ -11,12 +11,11 @@ import 'package:mpeischedule/feature/presentation/bloc/shedule_event.dart';
 import 'package:mpeischedule/feature/presentation/bloc/shedule_state.dart';
 import 'package:mpeischedule/feature/presentation/widgets/lesson_day_list_view.dart';
 import 'package:mpeischedule/generated/l10n.dart';
-import 'package:mpeischedule/ui/day_info/day_Info.dart';
 import 'package:mpeischedule/ui/shedule/scrool_day.dart';
 
-class DayLessonPage extends StatelessWidget {
+class LessonDayPage extends StatelessWidget {
   String nameGroup;
-  DayLessonPage(this.nameGroup);
+  LessonDayPage(this.nameGroup);
 
   @override
   Widget build(BuildContext context) {

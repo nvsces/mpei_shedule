@@ -9,8 +9,7 @@ class GetAllDayLesson {
 
   GetAllDayLesson(this.lessonDayRepository);
 
-  Future<Either<Failure, List<LessonDayEntity>>> call(
-      String group, ActionEvent action) async {
-    return await lessonDayRepository.getAllDayLesson(group, action);
+  Future<Either<Failure, List<LessonDayEntity>>> call(String url) async {
+    return await lessonDayRepository.getAllDayLesson(url);
   }
 }

@@ -10,44 +10,51 @@ import 'package:mpeischedule/feature/domain/entities/lesson_day_entities.dart';
 enum ActionEvent { next, back, now }
 const String urlNow =
     'https://mpei.ru/Education/timetable/Pages/default.aspx?group=';
-const String baseUrl = 'https://mpei.ru/Education/timetable/Pages/table.aspx';
+const String baseUrl =
+    'https://mpei.ru/Education/timetable/Pages/table.aspx?groupoid=';
+//  'https://mpei.ru/Education/timetable/Pages/table.aspx?groupoid=' +
+//             groupId +
+//             '&start=' +
+//             date
 
 class ParserDataSource {
   static late String groupId;
   static late String currentDate;
 
   static Future<List<LessonDayEntity>> getDayListLessonFull(
-      {required String groupName, required ActionEvent action}) async {
-    List<LessonDayEntity> pageListDayLesson;
+      {required url}) async {
+    //List<LessonDayEntity> pageListDayLesson;
 
-    http.Response commonResponse = await http.get(
-      Uri.parse('$urlNow$groupName'),
-    );
+    // http.Response commonResponse = await http.get(
+    //   Uri.parse('$urlNow$groupName'),
+    // );
 
-    if (commonResponse.statusCode == 200) {
-      List<Element> weekTr = _trueResponse(commonResponse);
+    // if (commonResponse.statusCode == 200) {
+    //   List<Element> weekTr = _trueResponse(commonResponse);
 
-      String nextRef = _getNextHref(weekTr);
-      String backRef = _getBackHref(weekTr);
+    //   String nextRef = _getNextHref(weekTr);
+    //   print(nextRef);
+    //   String backRef = _getBackHref(weekTr);
+    //   print(backRef);
 
-      switch (action) {
-        case ActionEvent.now:
-          pageListDayLesson = await _parserPage(urlNow + groupName);
-          break;
-        case ActionEvent.next:
-          pageListDayLesson = await _parserPage(baseUrl + nextRef);
-          break;
-        case ActionEvent.back:
-          pageListDayLesson = await _parserPage(baseUrl + backRef);
-          break;
-        default:
-          pageListDayLesson = _createEmptyListDay();
-          break;
-      }
-      return pageListDayLesson;
-    } else {
-      throw ServerException();
-    }
+    // pageListDayLesson= await _parserPage(url);
+
+    // switch (action) {
+    //   case ActionEvent.now:
+    //     pageListDayLesson = await _parserPage(urlNow + groupName);
+    //     break;
+    //   case ActionEvent.next:
+    //     pageListDayLesson = await _parserPage(baseUrl + nextRef);
+    //     break;
+    //   case ActionEvent.back:
+    //     pageListDayLesson = await _parserPage(baseUrl + backRef);
+    //     break;
+    //   default:
+    //     pageListDayLesson = _createEmptyListDay();
+    //     break;
+    // }
+    // return pageListDayLesson;
+    return await _parserPage(url);
   }
 
   static String _getNextHref(List<Element> weekTr) {
