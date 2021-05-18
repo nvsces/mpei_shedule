@@ -3,17 +3,17 @@ import 'package:mpeischedule/feature/domain/entities/lesson_day_entities.dart';
 
 class LessonDayListModel extends LessonDayEntity {
   LessonDayListModel({
-    required dayTime,
-    required groupId,
+    required weekLabel,
+    required dateTime,
     required this.lessons,
-  }) : super(dayTime: dayTime, groupId: groupId);
+  }) : super(weekLabel: weekLabel, dateTime: dateTime);
 
   final List<LessonModel> lessons;
 
   factory LessonDayListModel.fromJson(Map<String, dynamic> json) {
     return LessonDayListModel(
-      dayTime: json['dayTime'],
-      groupId: json['groupId'],
+      weekLabel: json['weekLabel'],
+      dateTime: json['dateTime'],
       lessons: (json['lessons'] as List<Map<String, dynamic>>)
           .map((e) => LessonModel.fromJson(e))
           .toList(),
@@ -22,8 +22,8 @@ class LessonDayListModel extends LessonDayEntity {
 
   Map<String, dynamic> toJson() {
     return {
-      'dayTime': dayTime,
-      'groupId': groupId,
+      'weekLabel': weekLabel,
+      'dateTime': dateTime,
       'lessons': lessons.map((e) => e.toJson()),
     };
   }

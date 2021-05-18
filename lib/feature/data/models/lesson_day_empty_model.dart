@@ -2,20 +2,20 @@ import 'package:mpeischedule/feature/domain/entities/lesson_day_entities.dart';
 
 class LessonDayEmptyModel extends LessonDayEntity {
   LessonDayEmptyModel({
-    required dayTime,
-    required groupId,
-  }) : super(dayTime: dayTime, groupId: groupId);
+    required weekLabel,
+    required dateTime,
+  }) : super(weekLabel: weekLabel, dateTime: dateTime);
 
   factory LessonDayEmptyModel.fromJson(Map<String, dynamic> json) {
     return LessonDayEmptyModel(
-      dayTime: json['dayTime'],
-      groupId: json['groupId'],
+      weekLabel: json['weekLabel'],
+      dateTime: json['dateTime'],
     );
   }
   Map<String, dynamic> toJson() {
     return {
-      'dayTime': dayTime,
-      'groupId': groupId,
+      'weekLabel': weekLabel,
+      'dateTime': dateTime,
     };
   }
 }
