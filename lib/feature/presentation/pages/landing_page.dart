@@ -2,10 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mpeischedule/bloc/authShedule/auth_event.dart';
 import 'package:mpeischedule/bloc/authShedule/auth_state.dart';
-import 'package:mpeischedule/feature/data/datasources/parser_data_source.dart';
 import 'package:mpeischedule/feature/presentation/pages/lesson_day_page.dart';
 import 'package:mpeischedule/generated/l10n.dart';
-import 'package:mpeischedule/ui/shedule/home_body_bloc.dart';
 import 'package:mpeischedule/bloc/authShedule/auth_bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -24,7 +22,6 @@ class _LandingPageState extends State<LandingPage> {
     return BlocBuilder<AuthBloc, AuthState>(
       builder: (context, state) {
         if (state is LoginState) {
-          // return BodyBloc(state.nameGroup);
           return LessonDayPage(state.nameGroup);
         } else {
           final AuthBloc authBloc = BlocProvider.of(context);

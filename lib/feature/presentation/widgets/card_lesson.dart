@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mpeischedule/feature/data/models/lesson_model.dart';
-import 'package:mpeischedule/ui/item_row.dart';
+import 'package:mpeischedule/feature/presentation/widgets/item_row.dart';
 
 class CardLesson extends StatelessWidget {
   CardLesson(this.lesson);

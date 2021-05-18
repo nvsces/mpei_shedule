@@ -8,7 +8,7 @@ import 'package:mpeischedule/feature/data/models/lesson_day_empty_model.dart';
 import 'package:mpeischedule/feature/data/models/lesson_model.dart';
 import 'package:mpeischedule/feature/domain/entities/lesson_day_entities.dart';
 import 'package:mpeischedule/feature/presentation/widgets/card_lesson.dart';
-import 'package:mpeischedule/ui/day_info/book_image.dart';
+import 'package:mpeischedule/feature/presentation/widgets/book_image.dart';
 
 class LessonDayListView extends StatelessWidget {
   List<LessonDayEntity> listDay;

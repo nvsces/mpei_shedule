@@ -7,7 +7,7 @@ import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 
 class ScrollDay extends StatelessWidget {
   List<String> listTime;
-  List<String> day = ["Пон", "Вт", "Ср", "Чет", "Пят", "Суб"];
+  List<String> day = ["Пн", "Вт", "Ср", "Чт", "Пт", "Сб"];
   ItemScrollController _scrollController = ItemScrollController();
 
   ScrollDay(this.listTime);

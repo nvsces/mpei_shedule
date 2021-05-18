@@ -11,7 +11,7 @@ import 'package:mpeischedule/feature/presentation/bloc/shedule_event.dart';
 import 'package:mpeischedule/feature/presentation/bloc/shedule_state.dart';
 import 'package:mpeischedule/feature/presentation/widgets/lesson_day_list_view.dart';
 import 'package:mpeischedule/generated/l10n.dart';
-import 'package:mpeischedule/ui/shedule/scrool_day.dart';
+import 'package:mpeischedule/feature/presentation/widgets/scrool_day.dart';
 
 class LessonDayPage extends StatelessWidget {
   String nameGroup;

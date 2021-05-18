@@ -46,13 +46,18 @@ class SheduleBloc extends Bloc<SheduleEvent, SheduleState> {
     switch (action) {
       case ActionEvent.now:
         {
-          url = urlNow + nameGroup;
-          List<String> params =
-              await ParserDataSource.getParams(groupName: nameGroup);
-          date = DateTime.parse(params[1].replaceAll('.', '-'))
-              .subtract(Duration(days: 7));
-          groupId = params[0];
-          break;
+          try {
+            url = urlNow + nameGroup;
+            List<String> params =
+                await ParserDataSource.getParams(groupName: nameGroup);
+            date = DateTime.parse(params[1].replaceAll('.', '-'))
+                .subtract(Duration(days: 7));
+            groupId = params[0];
+            break;
+          } catch (e) {
+            yield SheduleErrorState();
+            break;
+          }
         }
       case ActionEvent.back:
         {

@@ -11,7 +11,7 @@ import 'package:mpeischedule/bloc/theme/theme_evemt.dart';
 import 'package:mpeischedule/bloc/theme/theme_state.dart';
 import 'package:mpeischedule/generated/l10n.dart';
 import 'package:mpeischedule/theme.dart';
-import 'package:mpeischedule/ui/shedule/landing.dart';
+import 'package:mpeischedule/feature/presentation/pages/landing_page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class HomePage extends StatefulWidget {
