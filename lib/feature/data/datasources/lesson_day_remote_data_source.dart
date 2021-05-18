@@ -13,10 +13,10 @@ abstract class LessonDayRemoteDataSource {
 }
 
 class LessonDayRemoteDataSourceImpl implements LessonDayRemoteDataSource {
-  final http.Client client;
+  final http.Client client = http.Client();
   SheduleProvider _sheduleProvider = SheduleProvider();
-  LessonDayRemoteDataSourceImpl({required this.client});
-
+  //LessonDayRemoteDataSourceImpl({required this.client});
+  LessonDayRemoteDataSourceImpl();
   @override
   Future<List<LessonDayEntity>> getAllLessonDay(String groupID) async {
     List<LessonDayEntity> rezult = [];
@@ -39,13 +39,16 @@ class LessonDayRemoteDataSourceImpl implements LessonDayRemoteDataSource {
             );
           }
           rezult.add(LessonDayListModel(
-            dayTime: listProvider[i]!.date,
-            groupId: listProvider[i]!.groupId,
+            weekLabel: 'listProvider[i]!.date',
+            dateTime: 'listProvider[i]!.groupId',
             lessons: lessonList,
           ));
+        } else {
+          rezult.add(LessonDayEmptyModel(weekLabel: '', dateTime: ''));
         }
       }
     }
+    return Future.value(rezult);
   }
 
   Future<List<DayLesson?>?> _getAllDayLesson(
