@@ -12,72 +12,21 @@ const String urlNow =
     'https://mpei.ru/Education/timetable/Pages/default.aspx?group=';
 const String baseUrl =
     'https://mpei.ru/Education/timetable/Pages/table.aspx?groupoid=';
-//  'https://mpei.ru/Education/timetable/Pages/table.aspx?groupoid=' +
-//             groupId +
-//             '&start=' +
-//             date
 
-class ParserDataSource {
-  static late String groupId;
-  static late String currentDate;
-
-  static Future<List<LessonDayEntity>> getDayListLessonFull(
+class SheduleParserDataSource {
+  static Future<List<LessonDayListModel>> getDayListLessonFull(
       {required url}) async {
-    //List<LessonDayEntity> pageListDayLesson;
-
-    // http.Response commonResponse = await http.get(
-    //   Uri.parse('$urlNow$groupName'),
-    // );
-
-    // if (commonResponse.statusCode == 200) {
-    //   List<Element> weekTr = _trueResponse(commonResponse);
-
-    //   String nextRef = _getNextHref(weekTr);
-    //   print(nextRef);
-    //   String backRef = _getBackHref(weekTr);
-    //   print(backRef);
-
-    // pageListDayLesson= await _parserPage(url);
-
-    // switch (action) {
-    //   case ActionEvent.now:
-    //     pageListDayLesson = await _parserPage(urlNow + groupName);
-    //     break;
-    //   case ActionEvent.next:
-    //     pageListDayLesson = await _parserPage(baseUrl + nextRef);
-    //     break;
-    //   case ActionEvent.back:
-    //     pageListDayLesson = await _parserPage(baseUrl + backRef);
-    //     break;
-    //   default:
-    //     pageListDayLesson = _createEmptyListDay();
-    //     break;
-    // }
-    // return pageListDayLesson;
     return await _parserPage(url);
   }
 
-  static String _getNextHref(List<Element> weekTr) {
-    var header =
-        weekTr[0].getElementsByClassName('mpei-galaktika-lessons-grid-nav')[0];
-    String headerStringRight =
-        header.getElementsByTagName('a')[1].attributes.values.toString();
-    return headerStringRight.substring(1, headerStringRight.length - 1);
-  }
-
-  static String _getBackHref(List<Element> weekTr) {
-    var header =
-        weekTr[0].getElementsByClassName('mpei-galaktika-lessons-grid-nav')[0];
-    String headerStringLeft =
-        header.getElementsByTagName('a')[0].attributes.values.toString();
-    return headerStringLeft.substring(1, headerStringLeft.length - 1);
-  }
-
-  static List<LessonDayEmptyModel> _createEmptyListDay() {
-    List<LessonDayEmptyModel> list = [];
+  static List<LessonDayListModel> _createEmptyListDay() {
+    List<LessonDayListModel> list = [];
     for (int i = 0; i < 6; i++) {
-      list.add(
-          LessonDayEmptyModel(weekLabel: _createWeekLabel(i), dateTime: ''));
+      list.add(LessonDayListModel(
+        weekLabel: _createWeekLabel(i),
+        dateTime: '',
+        lessons: [],
+      ));
     }
     return list;
   }
@@ -174,11 +123,11 @@ class ParserDataSource {
     }
   }
 
-  static List<LessonDayEntity> _initPage(List<LessonDayEntity> dayList) {
-    List<LessonDayEntity> pageList = [];
+  static List<LessonDayListModel> _initPage(List<LessonDayListModel> dayList) {
+    List<LessonDayListModel> pageList = [];
     for (int i = 0; i < 6; i++) {
-      pageList.add(
-          LessonDayEmptyModel(weekLabel: _createWeekLabel(i), dateTime: ''));
+      pageList.add(LessonDayListModel(
+          weekLabel: _createWeekLabel(i), dateTime: '', lessons: []));
     }
     for (int j = 0; j < dayList.length; j++) {
       switch (dayList[j].weekLabel) {
@@ -205,8 +154,8 @@ class ParserDataSource {
     return pageList;
   }
 
-  static Future<List<LessonDayEntity>> _parserPage(String url) async {
-    List<LessonDayEntity> pageListDayLesson;
+  static Future<List<LessonDayListModel>> _parserPage(String url) async {
+    List<LessonDayListModel> pageListDayLesson;
 
     http.Response response = await http.get(Uri.parse(url));
     if (response.statusCode == 200) {

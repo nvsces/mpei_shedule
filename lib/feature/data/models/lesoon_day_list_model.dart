@@ -14,7 +14,7 @@ class LessonDayListModel extends LessonDayEntity {
     return LessonDayListModel(
       weekLabel: json['weekLabel'],
       dateTime: json['dateTime'],
-      lessons: (json['lessons'] as List<Map<String, dynamic>>)
+      lessons: (json['lessons'] as List<dynamic>)
           .map((e) => LessonModel.fromJson(e))
           .toList(),
     );
@@ -24,7 +24,7 @@ class LessonDayListModel extends LessonDayEntity {
     return {
       'weekLabel': weekLabel,
       'dateTime': dateTime,
-      'lessons': lessons.map((e) => e.toJson()),
+      'lessons': lessons.map((e) => e.toJson()).toList(),
     };
   }
 }
