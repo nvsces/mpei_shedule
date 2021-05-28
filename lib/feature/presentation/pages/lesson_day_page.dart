@@ -13,15 +13,18 @@ import 'package:mpeischedule/feature/presentation/widgets/lesson_day_list_view.d
 import 'package:mpeischedule/generated/l10n.dart';
 import 'package:mpeischedule/feature/presentation/widgets/scrool_day.dart';
 
+import '../../../locator_service.dart';
+
 class LessonDayPage extends StatelessWidget {
   String nameGroup;
-  LessonDayPage(this.nameGroup);
+  LessonDayPage({
+    required this.nameGroup,
+  });
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider<SheduleBloc>(
-      create: (context) => SheduleBloc(
-          getAllDayLesson: GetAllDayLesson(LessonDayRepositoryImpl())),
+      create: (context) => sl<SheduleBloc>(),
       child: BlocProvider<ControllerBloc>(
         create: (context) => ControllerBloc(),
         child: BlocBuilder<SheduleBloc, SheduleState>(

@@ -6,7 +6,7 @@ abstract class NetworkInfo {
 
 class NetworkInfoImp implements NetworkInfo {
   final InternetConnectionChecker connectionChecker;
-
+  //NetworkInfoImp(Object object);
   NetworkInfoImp(this.connectionChecker);
 
   @override

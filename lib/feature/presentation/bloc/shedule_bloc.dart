@@ -1,13 +1,18 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:mpeischedule/feature/data/datasources/parser_data_source.dart';
+import 'package:mpeischedule/core/platform/network_info.dart';
+import 'package:mpeischedule/feature/data/datasources/shedule_parser_data_source.dart';
 import 'package:mpeischedule/feature/domain/usecases/get_all_day_lesson.dart';
 import 'package:mpeischedule/feature/presentation/bloc/shedule_event.dart';
 import 'package:mpeischedule/feature/presentation/bloc/shedule_state.dart';
 
+import '../../../locator_service.dart';
+
 class SheduleBloc extends Bloc<SheduleEvent, SheduleState> {
   final GetAllDayLesson getAllDayLesson;
+  NetworkInfo network;
 
-  SheduleBloc({required this.getAllDayLesson}) : super(SheduleFirstState());
+  SheduleBloc({required this.getAllDayLesson, required this.network})
+      : super(SheduleFirstState());
 
   @override
   Stream<SheduleState> mapEventToState(SheduleEvent event) async* {
@@ -43,39 +48,41 @@ class SheduleBloc extends Bloc<SheduleEvent, SheduleState> {
     DateTime date = DateTime.now();
     String groupId = nameGroup;
     String url = '';
-    switch (action) {
-      case ActionEvent.now:
-        {
-          try {
-            url = urlNow + nameGroup;
-            List<String> params =
-                await ParserDataSource.getParams(groupName: nameGroup);
-            date = DateTime.parse(params[1].replaceAll('.', '-'))
-                .subtract(Duration(days: 7));
-            groupId = params[0];
-            break;
-          } catch (e) {
-            yield SheduleErrorState();
+    if (await network.isConnected) {
+      switch (action) {
+        case ActionEvent.now:
+          {
+            try {
+              url = urlNow + nameGroup;
+              List<String> params =
+                  await SheduleParserDataSource.getParams(groupName: nameGroup);
+              date = DateTime.parse(params[1].replaceAll('.', '-'))
+                  .subtract(Duration(days: 7));
+              groupId = params[0];
+              break;
+            } catch (e) {
+              yield SheduleErrorState();
+              break;
+            }
+          }
+        case ActionEvent.back:
+          {
+            date = dateTime.subtract(Duration(days: 7));
+            var dateString =
+                date.toString().replaceAll('-', '.').substring(0, 10);
+            url = baseUrl + nameGroup + '&start=' + dateString;
             break;
           }
-        }
-      case ActionEvent.back:
-        {
-          date = dateTime.subtract(Duration(days: 7));
-          var dateString =
-              date.toString().replaceAll('-', '.').substring(0, 10);
-          url = baseUrl + nameGroup + '&start=' + dateString;
-          break;
-        }
 
-      default:
-        {
-          date = dateTime.add(Duration(days: 7));
-          var dateString =
-              date.toString().replaceAll('-', '.').substring(0, 10);
-          url = baseUrl + nameGroup + '&start=' + dateString;
-          break;
-        }
+        default:
+          {
+            date = dateTime.add(Duration(days: 7));
+            var dateString =
+                date.toString().replaceAll('-', '.').substring(0, 10);
+            url = baseUrl + nameGroup + '&start=' + dateString;
+            break;
+          }
+      }
     }
     final failOrLessonDay = await getAllDayLesson(url);
 
