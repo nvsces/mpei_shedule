@@ -80,6 +80,8 @@ class SheduleBloc extends Bloc<SheduleEvent, SheduleState> {
             var dateString =
                 date.toString().replaceAll('-', '.').substring(0, 10);
             url = baseUrl + nameGroup + '&start=' + dateString;
+            // url =
+            //     'https://mpei.ru/Education/timetable/Pages/table.aspx?groupoid=14297&start=2021.09.13';
             break;
           }
       }

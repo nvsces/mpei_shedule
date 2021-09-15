@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:html/dom.dart';
 import 'package:html/parser.dart';
 import 'package:http/http.dart' as http;
@@ -10,6 +12,7 @@ import 'package:mpeischedule/feature/domain/entities/lesson_day_entities.dart';
 enum ActionEvent { next, back, now }
 const String urlNow =
     'https://mpei.ru/Education/timetable/Pages/default.aspx?group=';
+
 const String baseUrl =
     'https://mpei.ru/Education/timetable/Pages/table.aspx?groupoid=';
 
@@ -157,7 +160,8 @@ class SheduleParserDataSource {
   static Future<List<LessonDayListModel>> _parserPage(String url) async {
     List<LessonDayListModel> pageListDayLesson;
 
-    http.Response response = await http.get(Uri.parse(url));
+    http.Response response = await http
+        .get(Uri.parse(url), headers: {"Content-Type": "application/json"});
     if (response.statusCode == 200) {
       List<Element> weekTr = _trueResponse(response);
       if (weekTr.length < 3) {
@@ -185,9 +189,9 @@ class SheduleParserDataSource {
           .getElementsByClassName('mpei-galaktika-lessons-grid-nav')[0];
       String headerStrinId =
           header.getElementsByTagName('a')[1].attributes.values.toString();
-      String groupId = headerStrinId.substring(11, 15);
-      String currentDate = headerStrinId.substring(
-          headerStrinId.length - 11, headerStrinId.length - 1);
+      var splitData = headerStrinId.split('&');
+      var groupId = splitData[0].split('=')[1];
+      var currentDate = splitData[1].split('=')[1].replaceAll(')', '');
       return Future.value([groupId, currentDate]);
     } else
       throw ServerException();
@@ -195,10 +199,11 @@ class SheduleParserDataSource {
 
   static List<Element> _trueResponse(http.Response response) {
     var document = parse(response.body);
+    log(response.body.toString());
+    print(document.body.toString());
     var tableWeek =
         document.getElementsByClassName('mpei-galaktika-lessons-grid-tbl')[0];
-    return tableWeek
-        .getElementsByTagName('tbody')[0]
-        .getElementsByTagName('tr');
+    var tbody = tableWeek.getElementsByTagName('tbody')[0];
+    return tbody.getElementsByTagName('tr');
   }
 }
